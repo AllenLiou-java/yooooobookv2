@@ -273,12 +273,14 @@ export default {
       const wrapper = this.$refs.wrapper
       wrapper.classList.remove('activeRegister')
       wrapper.classList.remove('activeForgetPassword')
+
       this.$emit('update:modalType', 'login')
       this.formDataReset()
     },
     toChangePassword() {
       const wrapper = this.$refs.wrapper
       wrapper.classList.add('activeForgetPassword')
+
       this.$emit('update:modalType', 'forgetPassword')
       this.formDataReset()
     },
@@ -352,5 +354,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './loginModal.scss';
+// @import './loginModal.scss';
+@import '@/assets/scss/components/Modal/loginModal.scss';
 </style>

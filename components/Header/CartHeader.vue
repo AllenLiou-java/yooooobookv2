@@ -12,5 +12,6 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-@import './cartHeader.scss';
+// @import './cartHeader.scss';
+@import '@/assets/scss/components/Header/cartHeader.scss';
 </style>

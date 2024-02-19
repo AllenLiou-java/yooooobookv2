@@ -91,22 +91,6 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-@import './bannerContent.scss';
-
-.recommand-box {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-.recommend:before {
-  content: '推薦';
-  position: absolute;
-  top: -8px;
-  right: -26px;
-  z-index: 1;
-  padding: 14px 22px 2px;
-  background-color: #ff9900;
-  transform: rotate(45deg);
-  font-size: 12px;
-  color: #ffffff;
-}
+// @import './bannerContent.scss';
+@import '@/assets/scss/components/Header/bannerContent.scss';
 </style>

@@ -105,5 +105,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './logoutModal.scss';
+// @import './logoutModal.scss';
+@import '@/assets/scss/components/Modal/logoutModal.scss';
 </style>

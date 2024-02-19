@@ -123,5 +123,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './book.scss';
+// @import './bookReader.scss';
+@import '@/assets/scss/components/Book/bookReader.scss';
 </style>
