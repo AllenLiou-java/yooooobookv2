@@ -45,8 +45,8 @@ import LogoutModal from '@/components/Modal/LogoutModal.vue'
 import NotifyModal from '@/components/Modal/NotifyModal.vue'
 import MyFooter from '@/components/Footer/Footer.vue'
 import SideSocialGroup from '@/components/SideSocialGroup.vue'
-import API from '~/utils/api'
-import APIHandler from '~/utils/apiHandler'
+import API from '~/api/api.config'
+import APIHandler from '~/api/apiHandler'
 import { unlockScroll } from '@/assets/js/tool'
 
 export default {
