@@ -175,7 +175,7 @@ export const actions = {
         console.log(e)
       })
   },
-  async getOrderList({ state, commit, dispatch }, payload) {
+  async getOrderList({ state, commit }, payload) {
     const uid = payload.localId || Cookie.get('userUid')
     const idToken = payload.idToken
 
