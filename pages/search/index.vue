@@ -81,8 +81,7 @@ export default {
   },
   computed: {
     items() {
-      const vuexUserOrderList = this.$store.state.userOrderList
-      return Object.values(vuexUserOrderList)
+      return this.$store.state.userOrderList
     },
     isAdministrator() {
       return this.$store.state.isAdministrator

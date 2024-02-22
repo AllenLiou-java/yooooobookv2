@@ -182,7 +182,7 @@ export const actions = {
     try {
       const { data } = await this.$api.order.getOrderList(uid, idToken)
 
-      if (data) commit('setUserOrderList', data)
+      if (data) commit('setUserOrderList', Object.values(data))
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e)
