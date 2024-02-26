@@ -72,6 +72,16 @@ const API = {
       method: 'patch',
     },
   },
+  products: {
+    getProducts: {
+      url: '/products.json',
+      method: 'get',
+    },
+    getProduct: {
+      url: '/products/:product_id.json',
+      method: 'get',
+    },
+  },
   auth: {
     getAuthList: {
       url: '/auth.json',

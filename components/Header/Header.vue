@@ -10,7 +10,7 @@
           <nuxt-link to="/" exact>首頁</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/order">預購書籍</nuxt-link>
+          <nuxt-link to="/products">預購書籍</nuxt-link>
         </li>
         <li>
           <nuxt-link to="/search?page=1">訂單查詢</nuxt-link>

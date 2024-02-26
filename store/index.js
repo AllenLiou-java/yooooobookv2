@@ -18,6 +18,8 @@ export const state = () => ({
   userOrderList: [],
   allOrderList: [],
   isAdministrator: false,
+  productList: [],
+  productInfo: {},
 })
 
 export const mutations = {
@@ -85,6 +87,12 @@ export const mutations = {
   },
   setIsAdministrator(state, payload) {
     state.isAdministrator = payload
+  },
+  setProductList(state, payload) {
+    state.productList = payload
+  },
+  setProductInfo(state, payload) {
+    state.productInfo = payload
   },
 }
 
