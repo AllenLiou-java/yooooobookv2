@@ -131,7 +131,6 @@ export default {
     { src: '~/plugins/api-plugin.js' },
     { src: '~/plugins/aos.js', mode: 'client' },
     { src: '~/plugins/flipbook.js', mode: 'client' },
-    { src: '~/plugins/bootstrapVue.js', mode: 'client' },
     { src: '~/plugins/icon.js', mode: 'client' },
   ],
 
@@ -176,6 +175,9 @@ export default {
       'FormRadioPlugin',
       'ToastPlugin',
       'ModalPlugin',
+      'BreadcrumbPlugin',
+      'CollapsePlugin',
+      'CardPlugin',
     ],
     directivePlugins: ['VBPopoverPlugin', 'VBScrollspyPlugin'],
     components: [

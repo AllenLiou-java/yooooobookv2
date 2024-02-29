@@ -1,6 +1,7 @@
 <template>
   <div class="purchase">
     <div class="container mb-5">
+      <b-breadcrumb :items="pageLinks"></b-breadcrumb>
       <div class="row">
         <div class="col-12 col-lg-6">
           <img
@@ -277,6 +278,20 @@ export default {
       },
       orderQty: 0,
       stock: 0,
+      pageLinks: [
+        {
+          text: '首頁',
+          to: { name: 'index' },
+        },
+        {
+          text: '產品列表',
+          to: { name: 'products' },
+        },
+        {
+          text: '',
+          active: true,
+        },
+      ],
     }
   },
   head() {
@@ -322,7 +337,9 @@ export default {
   },
   created() {
     const productId = this.$route.params.productId
-    const productList = this.$store.state.productList
+    const productList = JSON.parse(
+      JSON.stringify(this.$store.state.productList)
+    )
     const productIdx = productList.findIndex((item) => {
       return item.productId === productId
     })
@@ -332,6 +349,8 @@ export default {
     } else {
       this.getProductInfo()
     }
+
+    this.pageLinks[2].text = productId
   },
   mounted() {
     this.getStock()
