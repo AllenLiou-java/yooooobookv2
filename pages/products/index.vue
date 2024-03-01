@@ -1,11 +1,11 @@
 <template>
   <div class="container py-4">
-    <div class="cards d-flex flex-wrap">
+    <div class="cards d-flex flex-column flex-sm-row flex-wrap">
       <nuxt-link
         v-for="product in products"
         :key="product.productId"
         :to="'/products/' + product.productId"
-        class="card d-flex flex-column rounded px-2 py-3 border m-3"
+        class="card d-flex flex-column justify-content-center align-items-center rounded px-2 py-3 border m-3"
       >
         <img class="mb-2" :src="product.imgSrc" alt="product-img" />
         <span class="mb-3">{{ product.name }}</span>
@@ -80,6 +80,12 @@ export default {
 .card {
   max-width: calc((100% - 128px) / 4);
   transition: ease 0.4s;
+
+  img {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+  }
 
   @include media-w900 {
     max-width: calc((100% - 96px) / 3);

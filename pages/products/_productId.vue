@@ -16,7 +16,7 @@
           </h3>
           <ul class="book pl-4 mb-3">
             <li
-              v-for="(item, idx) in productContent"
+              v-for="(item, idx) in productInfo.content"
               :key="idx"
               class="book__item"
               style="font-size: 18px"
@@ -80,7 +80,7 @@
       <p class="mb-3 font-weight-bold" style="font-size: 24px"><u>優惠表</u></p>
       <div class="row">
         <div
-          v-for="plan in plans"
+          v-for="plan in productInfo.plans"
           :key="plan.type"
           class="col-12 col-lg-5 mb-3"
         >
@@ -261,14 +261,14 @@ export default {
       productInfo: {
         productId: '',
         name: '',
-        content: '',
+        content: [],
         price: {
           originalPrice: 0,
           promote: 0,
           discount: 0,
           discountList: {},
         },
-
+        plans: [],
         imgSrc: '',
         isFromGroup: false,
       },
@@ -325,15 +325,6 @@ export default {
         },
       ],
     }
-  },
-  computed: {
-    productContent() {
-      const content = this.productInfo.content
-      return content.split(',')
-    },
-    plans() {
-      return this.productInfo.plans
-    },
   },
   created() {
     const productId = this.$route.params.productId
@@ -425,7 +416,7 @@ export default {
               Cookie.set('orderListInCart', strOrderList)
             }
           }
-          this.$router.push('/cart')
+          this.$router.push('/cart/summary')
         } else {
           this.openToast('庫存不足', '訂購數量不得超過庫存數')
         }
