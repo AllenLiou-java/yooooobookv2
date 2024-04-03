@@ -6,17 +6,17 @@
         <template v-if="orderList.length > 0">
           <ul class="orderList">
             <li
-              v-for="item in orderList"
-              :key="item.productId"
+              v-for="order in orderList"
+              :key="order.productId"
               class="d-flex flex-column flex-lg-row align-items-center list-unstyled orderList__item"
             >
-              <img class="p-3" :src="item.imgSrc" alt="books_photo" />
+              <img class="p-3" :src="order.imgSrc" alt="books_photo" />
               <div class="row align-items-center flex-grow-1">
                 <div class="title col-12 col-lg-6 mb-3 mb-lg-0">
-                  <h3>{{ item.name }}</h3>
+                  <h3>{{ order.name }}</h3>
                   <ul>
                     <li
-                      v-for="(contentItem, c_idx) in item.content"
+                      v-for="(contentItem, c_idx) in order.content"
                       :key="c_idx + 1"
                     >
                       <p>{{ contentItem }}</p>
@@ -25,7 +25,7 @@
                 </div>
                 <Formatter
                   data-type="NumberComma"
-                  :origin-data="item.price.discount * item.qty"
+                  :origin-data="order.price.discount * order.qty"
                   class="col-6 col-lg-3 price"
                 >
                   <template #default="propsData">
@@ -37,12 +37,12 @@
                     <minus
                       style="font-size: 24px"
                       class="pointer"
-                      @click="minusQty(item.productId)"
+                      @click="minusQty(order.productId)"
                     />
                   </client-only>
                   <Formatter
                     data-type="NumberComma"
-                    :origin-data="item.qty"
+                    :origin-data="order.qty"
                     class="qty px-2 user-select-none"
                     style="text-align: center"
                   >
@@ -54,7 +54,7 @@
                     <plus
                       style="font-size: 24px"
                       class="pointer"
-                      @click="addQty(item.productId)"
+                      @click="addQty(order.productId)"
                     />
                   </client-only>
                 </div>

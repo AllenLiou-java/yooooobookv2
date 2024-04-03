@@ -91,9 +91,9 @@
 
         <OrderForm
           ref="orderForm"
-          :form-data="inputValue"
           :input-setup="inputSetup"
           :btn-setup="btnSetup"
+          :form-data="inputValue"
           :order-mode="orderMode"
           :order-list="orderList"
           @submitEvent="sendOrder"
@@ -302,34 +302,16 @@ export default {
         { type: 'submit', btnName: '訂單送出', variant: 'secondary' },
       ],
       inputValue: {
+        buyer: '',
         recipient: '',
         address: '',
-        phone: '',
         email: '',
-        account: '',
-        buyer: '',
+        phone: '',
         taxId: '',
+        account: '',
         buyerRemark: '',
-        otherDeliveryList: [
-          {
-            recipient: '',
-            address: '',
-            phone: '',
-          },
-        ],
-        invoiceList: [
-          {
-            buyer: '',
-            taxId: '',
-            products: [
-              {
-                productId: '',
-                productName: '',
-                qty: 0,
-              },
-            ],
-          },
-        ],
+        otherDeliveryList: [],
+        invoiceList: [],
         mainOrderQty: null,
         totalOrderQty: null,
       },
@@ -568,6 +550,40 @@ export default {
       } else {
         this.$refs.orderForm.addDeliveryItem()
       }
+    },
+    addProductInputSetup() {
+      const productInputSetup = {
+        name: '產品資訊',
+        content: [],
+      }
+
+      this.orderList.forEach((order) => {
+        const inputSetup = {
+          title: order.name,
+          type: 'number',
+          placeholder: '請輸入此產品寄送套數',
+          attrName: 'orderList',
+          id: 'orderQty-' + order.productId,
+          required: true,
+          invalidFeedback: '請輸入此產品寄送套數',
+        }
+        productInputSetup.content.push(inputSetup)
+      })
+      this.inputSetup.push(productInputSetup)
+    },
+    addInputValueOrderList() {
+      const orderList = this.orderList.map((item) => {
+        return {
+          productId: item.productId,
+          productName: item.name,
+          qty: item.qty,
+          unitPrice: item.price.discount,
+          promote: item.price.promote,
+          discountList: item.price.discountList,
+          totalPrice: this.totalPrice,
+        }
+      })
+      this.inputValue.orderList = orderList
     },
   },
 }

@@ -22,7 +22,7 @@ export const initOrderInfo = () => {
       },
     ],
     totalPrice: null,
-    mainOrderQty: null,
+    // mainOrderQty: null,
     oderDate: '',
     status: '',
     isClosed: '',
