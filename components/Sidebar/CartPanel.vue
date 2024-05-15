@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <b-button v-b-toggle.sidebar-footer>Toggle Sidebar</b-button> -->
     <div v-b-toggle.sidebar-footer class="cart">
       <client-only>
         <Cart class="cartIcon" />
@@ -25,7 +24,9 @@
           <button type="button" class="btn btn-primary mx-2" @click="hide">
             關閉
           </button>
-          <button type="button" class="btn btn-success">結帳</button>
+          <button type="button" class="btn btn-success" @click="toCartPage">
+            結帳
+          </button>
         </div>
       </template>
       <div class="px-3 py-4">
@@ -186,6 +187,11 @@ export default {
       return list.findIndex((item) => {
         return item.productId === target
       })
+    },
+    toCartPage() {
+      if (this.orderList.length > 0) {
+        this.$router.push('/cart')
+      }
     }
   }
 }

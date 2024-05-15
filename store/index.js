@@ -20,7 +20,6 @@ export const state = () => ({
   orderListCart: [],
   isAdministrator: false,
   productList: []
-  // productInfo: {}
 })
 
 export const mutations = {
@@ -96,9 +95,6 @@ export const mutations = {
   setProductList(state, payload) {
     state.productList = payload
   }
-  // setProductInfo(state, payload) {
-  //   state.productInfo = payload
-  // }
 }
 
 export const getters = {}
@@ -208,17 +204,6 @@ export const actions = {
       console.log(e)
     }
   },
-  // getOrderListFromCookie({ commit }) {
-  //   return new Promise((resolve, reject) => {
-  //     const orderListInCart = Cookie.get('orderListInCart')
-  //     let orderList = []
-  //     if (orderListInCart) {
-  //       orderList = JSON.parse(orderListInCart)
-  //     }
-  //     commit('setOrderListCart', orderList)
-  //     resolve(orderList)
-  //   })
-  // },
   updateOrderList({ commit }, payload) {
     Cookie.set('orderListInCart', JSON.stringify(payload))
     commit('setOrderListCart', payload)
@@ -271,6 +256,7 @@ export const actions = {
           resolve(productList)
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.log('取得產品列表失敗', e)
         })
     })
