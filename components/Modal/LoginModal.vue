@@ -175,16 +175,16 @@ export default {
   props: {
     isOpenModal: {
       type: Boolean,
-      default: false,
+      default: false
     },
     modalType: {
       type: String,
-      required: true,
+      required: true
     },
     errorMsg: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   data() {
     return {
@@ -195,7 +195,7 @@ export default {
       emailWithError: false,
       passwordWithError: null,
       nameWithError: null,
-      repeatPasswordWithError: null,
+      repeatPasswordWithError: null
     }
   },
   computed: {
@@ -209,7 +209,7 @@ export default {
       } else {
         return '登出'
       }
-    },
+    }
   },
   watch: {
     email(newVal, oldVal) {
@@ -259,7 +259,7 @@ export default {
       if (newVal !== oldVal) {
         this.nameWithError = ''
       }
-    },
+    }
   },
   methods: {
     toRegister() {
@@ -346,10 +346,10 @@ export default {
         modalType: this.modalType,
         name: this.username,
         email: this.email,
-        password: this.password,
+        password: this.password
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

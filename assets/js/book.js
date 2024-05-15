@@ -21,7 +21,7 @@ const pages = {
     '01_Limited_Company/16.jpg',
     '01_Limited_Company/17.jpg',
     '01_Limited_Company/18.jpg',
-    '01_Limited_Company/19.jpg',
+    '01_Limited_Company/19.jpg'
   ],
   book2: [
     null,
@@ -55,7 +55,7 @@ const pages = {
     '02_Company_Limited/24.jpg',
     '02_Company_Limited/25.jpg',
     '02_Company_Limited/26.jpg',
-    '02_Company_Limited/27.jpg',
+    '02_Company_Limited/27.jpg'
   ],
   book3: [
     null,
@@ -75,8 +75,8 @@ const pages = {
     '03_Document_Detail/10.jpg',
     '03_Document_Detail/11.jpg',
     '03_Document_Detail/12.jpg',
-    '03_Document_Detail/13.jpg',
-  ],
+    '03_Document_Detail/13.jpg'
+  ]
 }
 
 export default pages

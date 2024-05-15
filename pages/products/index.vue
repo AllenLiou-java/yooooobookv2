@@ -21,7 +21,7 @@
 export default {
   data() {
     return {
-      products: [],
+      products: []
     }
   },
   head() {
@@ -31,44 +31,37 @@ export default {
         {
           // hid: 'description',
           name: 'description',
-          content: '預購書籍 - 產品訂購頁面、方案促銷內容',
+          content: '預購書籍 - 產品訂購頁面、方案促銷內容'
         },
         {
           // hid: 'og:description',
           property: 'og:description',
-          content: '預購書籍 - 產品訂購頁面、方案促銷內容',
+          content: '預購書籍 - 產品訂購頁面、方案促銷內容'
         },
         {
           // hid: 'og:title',
           property: 'og:title',
-          content: '預購書籍 - 有良冊股份有限公司',
+          content: '預購書籍 - 有良冊股份有限公司'
         },
         {
           // hid: 'og:image',
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           // hid: 'og:url',
           property: 'og:url',
-          content: 'https://www.yooooobook.com/order',
-        },
-      ],
+          content: 'https://www.yooooobook.com/order'
+        }
+      ]
     }
   },
   computed: {},
   mounted() {
-    this.products = this.$store.state.productList
-    if (this.products.length > 0) return
-    this.getProducts()
-  },
-  methods: {
-    async getProducts() {
-      const { data } = await this.$api.products.getProducts()
-      this.products = Object.values(data)
-      this.$store.commit('setProductList', this.products)
-    },
-  },
+    this.$store.dispatch('getProductList').then((productList) => {
+      this.products = productList
+    })
+  }
 }
 </script>
 

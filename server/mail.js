@@ -64,15 +64,15 @@ async function sendOrderConfirmMail(orderInfo) {
     service: 'gmail',
     auth: {
       user: 'yooooobook@gmail.com',
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
+      pass: process.env.GMAIL_APP_PASSWORD
+    }
   })
 
   const mailOptions = {
     from: 'yooooobook@gmail.com',
     to: orderInfo.email,
     subject: '公司登記實務及案例解析【訂單成立通知】',
-    html: contentHtml(orderInfo),
+    html: contentHtml(orderInfo)
   }
 
   const result = await transporter.sendMail(mailOptions)

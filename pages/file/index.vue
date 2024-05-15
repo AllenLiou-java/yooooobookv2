@@ -67,14 +67,14 @@ export default {
         {
           key: 'title',
           label: '附件名稱',
-          class: ['align-middle', 'text-start'],
+          class: ['align-middle', 'text-start']
         },
         {
           key: 'link',
           label: '下載',
-          class: ['align-middle', 'text-center'],
-        },
-      ],
+          class: ['align-middle', 'text-center']
+        }
+      ]
     }
   },
   head() {
@@ -83,27 +83,27 @@ export default {
       meta: [
         {
           name: 'description',
-          content: '檔案下載 - 有良冊股份有限公司',
+          content: '檔案下載 - 有良冊股份有限公司'
         },
         {
           property: 'og:description',
-          content: '檔案下載 - 有良冊股份有限公司',
+          content: '檔案下載 - 有良冊股份有限公司'
         },
         {
           property: 'og:title',
-          content: '檔案下載 - 有良冊股份有限公司',
+          content: '檔案下載 - 有良冊股份有限公司'
         },
         {
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           property: 'og:url',
-          content: 'https://www.yooooobook.com/file',
-        },
-      ],
+          content: 'https://www.yooooobook.com/file'
+        }
+      ]
     }
-  },
+  }
 }
 </script>
 

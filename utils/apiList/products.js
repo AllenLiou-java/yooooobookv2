@@ -4,7 +4,7 @@ export default (axios) => ({
   getProducts() {
     return axios({
       methods: API.products.getProducts.method,
-      url: API.products.getProducts.url,
+      url: API.products.getProducts.url
     })
   },
   getProduct(productId) {
@@ -13,7 +13,7 @@ export default (axios) => ({
       url: API.products.getProduct.url.replace(
         ':product_id.json',
         productId + '.json'
-      ),
+      )
     })
-  },
+  }
 })

@@ -254,7 +254,7 @@ import Formatter from '@/components/Formatter.vue'
 export default {
   components: {
     Toaster,
-    Formatter,
+    Formatter
   },
   data() {
     return {
@@ -266,32 +266,18 @@ export default {
           originalPrice: 0,
           promote: 0,
           discount: 0,
-          discountList: {},
+          discountList: {}
         },
         plans: [],
         imgSrc: '',
-        isFromGroup: false,
+        isFromGroup: false
       },
       toastSet: {
         title: '',
-        content: '',
+        content: ''
       },
       orderQty: 0,
-      stock: 0,
-      pageLinks: [
-        {
-          text: '首頁',
-          to: { name: 'index' },
-        },
-        {
-          text: '產品列表',
-          to: { name: 'products' },
-        },
-        {
-          text: '',
-          active: true,
-        },
-      ],
+      stock: 0
     }
   },
   head() {
@@ -301,128 +287,151 @@ export default {
         {
           // hid: 'description',
           name: 'description',
-          content: '預購書籍 - 產品訂購頁面、方案促銷內容',
+          content: '預購書籍 - 產品訂購頁面、方案促銷內容'
         },
         {
           // hid: 'og:description',
           property: 'og:description',
-          content: '預購書籍 - 產品訂購頁面、方案促銷內容',
+          content: '預購書籍 - 產品訂購頁面、方案促銷內容'
         },
         {
           // hid: 'og:title',
           property: 'og:title',
-          content: '預購書籍 - 有良冊股份有限公司',
+          content: '預購書籍 - 有良冊股份有限公司'
         },
         {
           // hid: 'og:image',
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           // hid: 'og:url',
           property: 'og:url',
-          content: 'https://www.yooooobook.com/order',
+          content: 'https://www.yooooobook.com/order'
+        }
+      ]
+    }
+  },
+  computed: {
+    pageLinks() {
+      const productId = this.$route.params.productId
+      return [
+        {
+          text: '首頁',
+          to: { name: 'index' }
         },
-      ],
+        {
+          text: '產品列表',
+          to: { name: 'products' }
+        },
+        {
+          text: productId,
+          active: true
+        }
+      ]
     }
   },
-  created() {
-    const productId = this.$route.params.productId
-    const productList = JSON.parse(
-      JSON.stringify(this.$store.state.productList)
-    )
-    const productIdx = productList.findIndex((item) => {
-      return item.productId === productId
-    })
-
-    if (productIdx >= 0) {
-      this.productInfo = productList[productIdx]
-    } else {
-      this.getProductInfo()
-    }
-
-    this.pageLinks[2].text = productId
-  },
+  created() {},
   mounted() {
-    this.getStock()
+    this.initProductInfo()
+    this.setOrderQty()
+
+    const productId = this.$route.params.productId
+    this.getStockPromise(productId)
+      .then((res) => {
+        this.stock = parseInt(res.data.qty)
+      })
+      .catch((e) => {
+        // eslint-disable-next-line no-console
+        console.log('取得庫存失敗', e)
+      })
     this.setDiscountPrice(this.orderQty)
   },
   methods: {
-    async getStock() {
-      // 取得路由上的參數 productId (未來改成由透過路由參數傳遞)
+    getStockPromise(productId) {
+      return this.$api.stock.getStock(productId)
+    },
+    getProductInfoPromise() {
       const productId = this.$route.params.productId
-      // const productId = 'AA00001'
-      try {
-        const { data } = await this.$api.stock.getStock(productId)
-        if (data) {
-          this.stock = parseInt(data.qty)
-        } else {
-          this.stock = 0
-        }
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
+      return this.$api.products.getProduct(productId)
+    },
+    initProductInfo() {
+      const productId = this.$route.params.productId
+      const productListFromStore = JSON.parse(
+        JSON.stringify(this.$store.state.productList)
+      )
+
+      if (productListFromStore.length > 0) {
+        const productIndex = productListFromStore.findIndex((product) => {
+          return product.productId === productId
+        })
+
+        if (productIndex < 0) return
+        this.productInfo = productListFromStore[productIndex]
+      } else {
+        this.getProductInfoPromise()
+          .then((res) => {
+            this.productInfo = res.data
+          })
+          .catch((e) => {
+            // eslint-disable-next-line no-console
+            console.log('取得產品資料失敗', e)
+          })
       }
     },
-    async getProductInfo() {
+    setOrderQty() {
+      const orderListInCartFromCookie = Cookie.get('orderListInCart')
       const productId = this.$route.params.productId
-      const { data } = await this.$api.products.getProduct(productId)
-      this.productInfo = data
+      let orderList = []
+      if (orderListInCartFromCookie) {
+        orderList = JSON.parse(orderListInCartFromCookie)
+        const orderIndex = orderList.findIndex(
+          (order) => order.productId === productId
+        )
+        if (orderIndex >= 0) {
+          this.orderQty = orderList[orderIndex].qty
+        }
+      }
     },
     async toCheckout() {
       const orderQty = this.orderQty
-      if (orderQty <= 0) return
+      const productId = this.$route.params.productId
+      const orderListInCartFromCookie = Cookie.get('orderListInCart')
+      const productInfo = this.productInfo
+      let orderList = []
+      let stock = null
+
       if (!this.isLoggedIn()) return
+      if (orderQty <= 0) return
 
-      try {
-        // 判斷庫存是否足夠
-        const productId = this.$route.params.productId
-        // const productId = 'AA00001'
-        const { data } = await this.$api.stock.getStock(productId)
-        const stock = data.qty
+      // 判斷庫存是否足夠
+      const { data } = await this.getStockPromise(productId)
+      stock = data.qty
 
-        if (orderQty <= stock) {
-          if (process.client) {
-            const orderListInCart = Cookie.get('orderListInCart')
-
-            // 將orderList存入Cookie
-            // 已加入購物車 -> 修改該筆資料
-            // 未加入購物車 -> 新增該筆資料
-            if (orderListInCart) {
-              const orderInfo = this.productInfo
-              orderInfo.qty = orderQty
-
-              // 確認item是否在購物車有紀錄
-              const arrOrderListInCart = JSON.parse(orderListInCart)
-              const dataIdx = arrOrderListInCart.findIndex(function (item) {
-                return item.productId === orderInfo.productId
-              })
-
-              if (dataIdx >= 0) {
-                arrOrderListInCart[dataIdx] = orderInfo
-              } else {
-                arrOrderListInCart.push(orderInfo)
-              }
-
-              // 將訂單列表存入Cookie
-              const strOrderList = JSON.stringify(arrOrderListInCart)
-              Cookie.set('orderListInCart', strOrderList)
-            } else {
-              // Cookie中尚無orderList，則存入
-              const orderList = []
-              this.productInfo.qty = orderQty
-              orderList.push(this.productInfo)
-              const strOrderList = JSON.stringify(orderList)
-              Cookie.set('orderListInCart', strOrderList)
-            }
-          }
-          this.$router.push('/cart/summary')
-        } else {
-          this.openToast('庫存不足', '訂購數量不得超過庫存數')
+      if (orderQty <= stock) {
+        if (orderListInCartFromCookie) {
+          orderList = JSON.parse(orderListInCartFromCookie)
         }
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
+
+        // 確認購物車是否有資料
+        const orderIndex = orderList.findIndex((order) => {
+          return order.productId === productInfo.productId
+        })
+
+        productInfo.qty = orderQty
+        productInfo.stock = stock
+        // 有資料 -> 修改該筆資料  | 無資料 -> 新增該筆資料
+        if (orderIndex >= 0) {
+          orderList[orderIndex] = productInfo
+        } else {
+          productInfo.qty = orderQty
+          orderList.push(productInfo)
+        }
+
+        this.$store.dispatch('updateOrderList', orderList)
+        this.$router.push('/cart/summary')
+      } else {
+        this.openToast('庫存不足', '訂購數量不得超過庫存數')
       }
     },
     checkOrderQty(qty) {
@@ -503,8 +512,8 @@ export default {
       const filename = '團體預購表格(範例).xlsx'
       const storage = this.$firebase.storage()
       downloadFile(storage, refPath, filename)
-    },
-  },
+    }
+  }
 }
 </script>
 

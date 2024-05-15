@@ -59,12 +59,12 @@ export default {
   props: {
     isOpenLogoutModal: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      hasSendedVerifiedEmail: false,
+      hasSendedVerifiedEmail: false
     }
   },
   computed: {
@@ -83,7 +83,7 @@ export default {
     },
     isEmailVerified() {
       return this.$store.state.emailVerified
-    },
+    }
   },
   methods: {
     closeModal() {
@@ -99,8 +99,8 @@ export default {
         this.$emit('verifiedEmail')
         this.hasSendedVerifiedEmail = true
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

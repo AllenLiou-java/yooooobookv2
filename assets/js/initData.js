@@ -3,7 +3,7 @@ export const initOrderInfo = () => {
     buyer: '',
     receiver: {
       name: '',
-      address: '',
+      address: ''
     },
     email: '',
     phone: '',
@@ -18,8 +18,8 @@ export const initOrderInfo = () => {
         unitPrice: null,
         promote: null,
         discountList: null,
-        totalPrice: null,
-      },
+        totalPrice: null
+      }
     ],
     totalPrice: null,
     // mainOrderQty: null,
@@ -29,12 +29,12 @@ export const initOrderInfo = () => {
     delivery: {
       company: '',
       trackingNo: '',
-      trackingUrl: '',
+      trackingUrl: ''
     },
     remark: '',
     buyerRemark: '',
     isFromGroup: false,
     files: [],
-    deliveryList: [],
+    deliveryList: []
   }
 }

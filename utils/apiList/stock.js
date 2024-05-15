@@ -7,7 +7,7 @@ export default (axios) => ({
       url: API.stock.getStock.url.replace(
         ':product_id.json',
         productId + '.json'
-      ),
+      )
     })
   },
   patchStock(productId, qty, idToken) {
@@ -20,7 +20,7 @@ export default (axios) => ({
         ) +
         '?auth=' +
         idToken,
-      data: qty,
+      data: qty
     })
-  },
+  }
 })

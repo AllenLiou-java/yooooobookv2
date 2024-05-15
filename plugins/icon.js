@@ -22,6 +22,7 @@ import EditBtn from 'vue-material-design-icons/SquareEditOutline'
 import TooltipText from 'vue-material-design-icons/TooltipText'
 import DeleteAlert from 'vue-material-design-icons/DeleteAlert'
 import FileFind from 'vue-material-design-icons/FileFind'
+import Cart from 'vue-material-design-icons/Cart'
 
 import 'vue-material-design-icons/styles.css'
 
@@ -47,3 +48,4 @@ Vue.component('EditBtn', EditBtn)
 Vue.component('TooltipText', TooltipText)
 Vue.component('DeleteAlert', DeleteAlert)
 Vue.component('FileFind', FileFind)
+Vue.component('Cart', Cart)

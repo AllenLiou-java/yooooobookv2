@@ -221,7 +221,7 @@ export default {
     Card,
     BookReader,
     CardSwiper,
-    Accordion,
+    Accordion
   },
   data() {
     return {
@@ -229,28 +229,28 @@ export default {
         {
           title: '文件完備',
           description:
-            '整理公司登記所需要用到的各項文件範例，不用愁沒有參考範本。',
+            '整理公司登記所需要用到的各項文件範例，不用愁沒有參考範本。'
         },
         {
           title: '用詞精準',
           description:
-            '範例精準表達各項公司登記應記載事項及相關說明，不用再煩惱不知道文件內容該怎麼呈現。',
+            '範例精準表達各項公司登記應記載事項及相關說明，不用再煩惱不知道文件內容該怎麼呈現。'
         },
         {
           title: '於法有據',
           description:
-            '每份文件、登記案件範例皆有補充相關法令函釋並載明其法源依據，使申請書件符合公司法及相關法令所規定之形式要件，不再擔心文件不符遭登記機關否准。',
+            '每份文件、登記案件範例皆有補充相關法令函釋並載明其法源依據，使申請書件符合公司法及相關法令所規定之形式要件，不再擔心文件不符遭登記機關否准。'
         },
         {
           title: '範例詳盡',
           description:
-            '完整整理從公司的設立到解散登記，以及公司存續 時可能發生的變更登記範例，遇到變更登記時能有所參考。',
+            '完整整理從公司的設立到解散登記，以及公司存續 時可能發生的變更登記範例，遇到變更登記時能有所參考。'
         },
         {
           title: '由簡入繁',
           description:
-            '從各項登記之基礎點切入，彙整各項登記可能會遇到的問題並加以說明，讓你熟稔各項公司登記後，即使遇到再複雜的變更登記案件，也能輕鬆掌握要點。',
-        },
+            '從各項登記之基礎點切入，彙整各項登記可能會遇到的問題並加以說明，讓你熟稔各項公司登記後，即使遇到再複雜的變更登記案件，也能輕鬆掌握要點。'
+        }
       ],
       isOpen: false,
       bookOffsetTop: 150,
@@ -261,22 +261,22 @@ export default {
           name_zh: '有限公司篇',
           activePage: 1,
           coverImg: require('@/assets/img/cover_book-1.jpg'),
-          pages: pages.book1,
+          pages: pages.book1
         },
         {
           name: 'Company_Limited',
           name_zh: '股份有限公司篇',
           activePage: 1,
           coverImg: require('@/assets/img/cover_book-2.jpg'),
-          pages: pages.book2,
+          pages: pages.book2
         },
         {
           name: 'Document_Detail',
           name_zh: '應備文件詳析篇',
           activePage: 1,
           coverImg: require('@/assets/img/cover_book-3.jpg'),
-          pages: pages.book3,
-        },
+          pages: pages.book3
+        }
       ],
       selectedBook: {},
       selectedBookNo: null,
@@ -285,9 +285,9 @@ export default {
         spaceBetween: 30,
         pagination: {
           el: '.swiper-pagination',
-          clickable: true,
-        },
-      },
+          clickable: true
+        }
+      }
     }
   },
   head() {
@@ -297,26 +297,26 @@ export default {
         {
           name: 'description',
           content:
-            '有良冊所出版公司登記書籍，有助於公司、會計師、記帳士、記帳及報稅代理人申辦公司登記時，能快速瞭解各項登記所附書件應注意事項及相關法令規定，使申請登記案件皆能符合公司法規定，並提升申請案件登記效率。',
+            '有良冊所出版公司登記書籍，有助於公司、會計師、記帳士、記帳及報稅代理人申辦公司登記時，能快速瞭解各項登記所附書件應注意事項及相關法令規定，使申請登記案件皆能符合公司法規定，並提升申請案件登記效率。'
         },
         {
           property: 'og:description',
           content:
-            '有良冊所出版公司登記書籍，有助於公司、會計師、記帳士、記帳及報稅代理人申辦公司登記時，能快速瞭解各項登記所附書件應注意事項及相關法令規定，使申請登記案件皆能符合公司法規定，並提升申請案件登記效率。',
+            '有良冊所出版公司登記書籍，有助於公司、會計師、記帳士、記帳及報稅代理人申辦公司登記時，能快速瞭解各項登記所附書件應注意事項及相關法令規定，使申請登記案件皆能符合公司法規定，並提升申請案件登記效率。'
         },
         {
           property: 'og:title',
-          content: '公司登記實務及案例解析/公司登記書籍｜有良冊',
+          content: '公司登記實務及案例解析/公司登記書籍｜有良冊'
         },
         {
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           property: 'og:url',
-          content: 'https://www.yooooobook.com',
-        },
-      ],
+          content: 'https://www.yooooobook.com'
+        }
+      ]
     }
   },
   mounted() {
@@ -368,7 +368,7 @@ export default {
       const booksPos = [
         getPosition(book1).y,
         getPosition(book2).y,
-        getPosition(book3).y,
+        getPosition(book3).y
       ]
 
       return booksPos[bookno]
@@ -382,8 +382,8 @@ export default {
       const bookOffsetTop = bookPositionY - bookPreviewPos.y - 50
 
       return bookOffsetTop
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

@@ -11,7 +11,7 @@ export default ({ app }) => {
     easing: 'ease', // default easing for AOS animations
     once: true, // whether animation should happen only once - while scrolling down
     mirror: false, // whether elements should animate out while scrolling past them
-    anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+    anchorPlacement: 'top-bottom' // defines which position of the element regarding to window should trigger the animation
     // 前面的位置值: 元素的位置；後面的值：螢幕視圖的位置。
     // anchorPlacement是指：元素的top端觸碰到螢幕試圖的bottom端，則動畫被觸發
   })

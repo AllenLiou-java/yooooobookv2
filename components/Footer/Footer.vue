@@ -79,9 +79,9 @@
 export default {
   head() {
     return {
-      title: '公司登記實務及案例解析/公司登記書籍｜有良冊',
+      title: '公司登記實務及案例解析/公司登記書籍｜有良冊'
     }
-  },
+  }
 }
 </script>
 

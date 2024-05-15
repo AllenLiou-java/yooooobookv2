@@ -92,41 +92,21 @@
         >
       </div>
     </div>
-    <NotifyModal
-      ref="fileDeleteNote"
-      ref-name="fileDeleteNote"
-      title="產品刪除"
-      cancel-btn-name="取消"
-      confirm-btn-name="確定"
-      main-content="確定要刪除此產品嗎?"
-      is-confirm-show
-      @confirm="removeOrderItem()"
-    />
   </div>
 </template>
 
 <script>
-import Cookie from 'js-cookie'
 import Formatter from '@/components/Formatter.vue'
-import NotifyModal from '@/components/Modal/NotifyModal.vue'
 import { normalDiscount } from '@/assets/js/tool'
 
 export default {
   components: {
-    Formatter,
-    NotifyModal,
+    Formatter
   },
   layout: 'cartPage',
   middleware: ['auth'],
   data() {
-    return {
-      orderList: [],
-      activeProductId: '',
-      btnSetup: [
-        { type: 'reset', btnName: '返回', variant: 'primary' },
-        { type: 'submit', btnName: '訂單送出', variant: 'secondary' },
-      ],
-    }
+    return {}
   },
   head() {
     return {
@@ -135,29 +115,29 @@ export default {
         {
           // hid: 'description',
           name: 'description',
-          content: '購物車 - 彙整購物車內產品',
+          content: '購物車 - 彙整購物車內產品'
         },
         {
           // hid: 'og:description',
           property: 'og:description',
-          content: '購物車 - 彙整購物車內產品',
+          content: '購物車 - 彙整購物車內產品'
         },
         {
           // hid: 'og:title',
           property: 'og:title',
-          content: '購物車 - 有良冊股份有限公司',
+          content: '購物車 - 有良冊股份有限公司'
         },
         {
           // hid: 'og:image',
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           // hid: 'og:url',
           property: 'og:url',
-          content: 'https://www.yooooobook.com/cart',
-        },
-      ],
+          content: 'https://www.yooooobook.com/cart'
+        }
+      ]
     }
   },
   computed: {
@@ -173,58 +153,68 @@ export default {
         return 0
       }
     },
-  },
-  mounted() {
-    if (Cookie.get('orderListInCart')) {
-      this.orderList = JSON.parse(Cookie.get('orderListInCart'))
+    orderList() {
+      return this.$store.state.orderListCart
     }
   },
+  mounted() {},
   methods: {
     minusQty(productId) {
-      this.activeProductId = productId
+      const orderList = JSON.parse(JSON.stringify(this.orderList))
       const productIdx = this.findProductIndex(this.orderList, productId)
 
-      if (this.orderList[productIdx].qty - 1 > 0) {
-        this.orderList[productIdx].qty--
-        this.orderList[productIdx].price.discount = normalDiscount(
-          this.orderList[productIdx].qty,
-          this.orderList[productIdx].price.discountList
+      if (orderList[productIdx].qty - 1 > 0) {
+        orderList[productIdx].qty--
+        orderList[productIdx].price.discount = normalDiscount(
+          orderList[productIdx].qty,
+          orderList[productIdx].price.discountList
         )
-        this.updateOrderListInCart()
+        this.$store.dispatch('updateOrderList', orderList)
       } else {
-        this.$refs.fileDeleteNote.showModal()
+        const h = this.$createElement
+        const okTitle = h('span', { class: ['px-5', 'm-0'] }, '確定')
+        const cancelTitle = h('span', { class: ['px-5', 'm-0'] }, '取消')
+        this.$bvModal
+          .msgBoxConfirm('確定要刪除此產品嗎?', {
+            title: '產品刪除',
+            okTitle,
+            okVariant: 'danger',
+            cancelTitle,
+            hideHeaderClose: true,
+            centered: true,
+            footerClass: 'mx-auto border-0',
+            buttonSize: 'md',
+            bodyClass: 'text-center pt-5 pb-3'
+          })
+          .then((res) => {
+            if (res) {
+              orderList.splice(productIdx, 1)
+              this.$store.dispatch('updateOrderList', orderList)
+            }
+          })
       }
     },
     addQty(productId) {
-      this.activeProductId = productId
-      const productIdx = this.findProductIndex(this.orderList, productId)
+      const orderList = JSON.parse(JSON.stringify(this.orderList))
+      const productIdx = this.findProductIndex(orderList, productId)
+      const orderQty = orderList[productIdx].qty
+      const stock = orderList[productIdx].stock
 
-      this.orderList[productIdx].qty++
-
-      this.orderList[productIdx].price.discount = normalDiscount(
-        this.orderList[productIdx].qty,
-        this.orderList[productIdx].price.discountList
-      )
-
-      this.updateOrderListInCart()
-    },
-    updateOrderListInCart() {
-      Cookie.set('orderListInCart', JSON.stringify(this.orderList))
-    },
-    removeOrderItem() {
-      const productIdx = this.findProductIndex(
-        this.orderList,
-        this.activeProductId
-      )
-      this.orderList.splice(productIdx, 1)
-      this.updateOrderListInCart()
+      if (orderQty + 1 <= stock) {
+        orderList[productIdx].qty++
+        orderList[productIdx].price.discount = normalDiscount(
+          orderList[productIdx].qty,
+          orderList[productIdx].price.discountList
+        )
+        this.$store.dispatch('updateOrderList', orderList)
+      }
     },
     findProductIndex(list, target) {
       return list.findIndex((item) => {
         return item.productId === target
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

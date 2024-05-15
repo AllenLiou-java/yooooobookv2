@@ -102,30 +102,30 @@ export default {
         {
           key: 'orderId',
           label: '訂單編號',
-          class: 'text-center',
+          class: 'text-center'
         },
         {
           key: 'oderDate',
           label: '訂單日期',
-          class: 'text-center',
+          class: 'text-center'
         },
         {
           key: 'productName',
           label: '產品名稱',
-          class: 'text-center',
+          class: 'text-center'
         },
         {
           key: 'qty',
           label: '訂購量',
-          class: 'text-center',
+          class: 'text-center'
         },
         {
           key: 'totalPrice',
           label: '總金額',
-          class: 'text-center',
-        },
+          class: 'text-center'
+        }
       ],
-      items: [],
+      items: []
     }
   },
   mounted() {
@@ -157,8 +157,8 @@ export default {
         // eslint-disable-next-line no-console
         console.log(error)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

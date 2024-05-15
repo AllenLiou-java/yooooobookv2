@@ -11,7 +11,7 @@
       <div class="d-block text-center">
         <p class="my-4">{{ mainContent }}</p>
       </div>
-      <div class="row mx-n2">
+      <div class="row mx-2">
         <div class="col px-2">
           <b-button class="mt-3" variant="secondary" block @click="hideModal">{{
             cancelBtnName
@@ -37,28 +37,28 @@ export default {
   props: {
     refName: {
       type: String,
-      default: 'my-modal',
+      default: 'my-modal'
     },
     title: {
       type: String,
-      default: 'Modal Component',
+      default: 'Modal Component'
     },
     cancelBtnName: {
       type: String,
-      default: 'Close',
+      default: 'Close'
     },
     confirmBtnName: {
       type: String,
-      default: 'Confirm',
+      default: 'Confirm'
     },
     mainContent: {
       type: String,
-      default: 'Default Content',
+      default: 'Default Content'
     },
     isConfirmShow: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   methods: {
     showModal() {
@@ -74,8 +74,8 @@ export default {
       const refName = Object.keys(this.$refs)
       this.$refs[refName].hide()
       this.$emit('confirm')
-    },
-  },
+    }
+  }
 }
 </script>
 

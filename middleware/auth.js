@@ -20,6 +20,7 @@ export default function (context) {
       }
     }
   }
+
   if (!context.store.state.isUserLoggedIn) {
     if (context.route.name === 'cart') {
       return context.redirect('/order')

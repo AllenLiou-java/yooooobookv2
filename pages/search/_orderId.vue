@@ -49,32 +49,28 @@
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="row mb-2">
-          <div class="col-4 col-md-2">
-            <label class="mb-0">訂單內容：</label>
-          </div>
-          <div class="col-8 col-md-10">
-            <p
-              v-for="(order, idx) in orderInfo.orderList"
-              :key="idx"
-              class="mb-0"
-            >
-              {{ order.productName }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="row mb-2">
-          <div class="col-4 col-md-2">
-            <label class="mb-0">訂購套數：</label>
-          </div>
-          <div class="col-8 col-md-10">
+      <div class="col-12 col-lg-8">
+        <label class="mb-0 mb-2">訂單明細：</label>
+
+        <b-table
+          :fields="fields"
+          :items="orderItems"
+          outlined
+          bordered
+          small
+          stacked="md"
+          head-variant="dark"
+          class="mb-2"
+        >
+          <template #cell(index)="data">
+            {{ data.index + 1 }}
+          </template>
+
+          <template #cell(orderQty)="data">
             <Formatter
-              v-for="(order, idx) in orderInfo.orderList"
-              :key="idx"
-              :origin-data="order.qty === null ? 0 : order.qty"
+              :origin-data="
+                data.item.orderQty === null ? 0 : data.item.orderQty
+              "
               data-type="NumberComma"
               class="mb-0"
             >
@@ -82,19 +78,13 @@
                 {{ propsData.formatData }}
               </template>
             </Formatter>
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="row mb-2">
-          <div class="col-4 col-md-2">
-            <label class="mb-0">金額：</label>
-          </div>
-          <div class="col-8 col-md-10">
+          </template>
+
+          <template #cell(unitPrice)="data">
             <Formatter
-              v-for="(order, idx) in orderInfo.orderList"
-              :key="idx"
-              :origin-data="order.totalPrice === null ? 0 : order.totalPrice"
+              :origin-data="
+                data.item.unitPrice === null ? 0 : data.item.unitPrice
+              "
               data-type="NumberComma"
               class="mb-0"
             >
@@ -102,8 +92,21 @@
                 {{ propsData.formatData }}
               </template>
             </Formatter>
-          </div>
-        </div>
+          </template>
+
+          <template #cell(price)="data">
+            <Formatter
+              :origin-data="data.item.price === null ? 0 : data.item.price"
+              data-type="NumberComma"
+              class="mb-0"
+            >
+              <template #default="propsData">
+                {{ propsData.formatData }}
+              </template>
+            </Formatter>
+          </template>
+        </b-table>
+        <p class="text-right mb-0">合計：{{ totalPrice }} 元</p>
       </div>
     </div>
     <div class="row">
@@ -195,7 +198,7 @@
             <a
               :style="{
                 display:
-                  orderInfo.delivery.trackingUrl === '' ? 'none' : 'block',
+                  orderInfo.delivery.trackingUrl === '' ? 'none' : 'block'
               }"
               :href="orderInfo.delivery.trackingUrl"
               target="_blank"
@@ -312,7 +315,7 @@
               <a
                 :style="{
                   display:
-                    orderInfo.delivery.trackingUrl === '' ? 'none' : 'block',
+                    orderInfo.delivery.trackingUrl === '' ? 'none' : 'block'
                 }"
                 :href="orderInfo.delivery.trackingUrl"
                 target="_blank"
@@ -368,6 +371,7 @@
 <script>
 import { initOrderInfo } from '@/assets/js/initData'
 import Formatter from '~/components/Formatter.vue'
+import { NumberComma } from '@/assets/js/tool'
 
 export default {
   components: { Formatter },
@@ -379,6 +383,13 @@ export default {
   data() {
     return {
       orderInfo: {},
+      fields: [
+        { key: 'index', label: '編號', class: 'text-center' },
+        { key: 'productName', label: '產品名稱', class: 'text-center' },
+        { key: 'orderQty', label: '訂購數', class: 'text-center' },
+        { key: 'unitPrice', label: '單價', class: 'text-center' },
+        { key: 'price', label: '金額', class: 'text-center' }
+      ]
     }
   },
   head() {
@@ -387,28 +398,43 @@ export default {
       meta: [
         {
           name: 'description',
-          content: '訂單細節 - 查詢指定訂單的詳細資料',
+          content: '訂單細節 - 查詢指定訂單的詳細資料'
         },
         {
           property: 'og:description',
-          content: '訂單細節 - 查詢指定訂單的詳細資料',
+          content: '訂單細節 - 查詢指定訂單的詳細資料'
         },
         {
           property: 'og:title',
-          content: '訂單細節 - 有良冊股份有限公司',
+          content: '訂單細節 - 有良冊股份有限公司'
         },
         {
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           property: 'og:url',
-          content: 'https://www.yooooobook.com/search/detail',
-        },
-      ],
+          content: 'https://www.yooooobook.com/search/detail'
+        }
+      ]
     }
   },
-  computed: {},
+  computed: {
+    orderItems() {
+      const orderList = this.orderInfo.orderList
+      return orderList.map((order) => {
+        return {
+          productName: order.productName,
+          orderQty: order.qty,
+          unitPrice: order.unitPrice,
+          price: order.totalPrice
+        }
+      })
+    },
+    totalPrice() {
+      return NumberComma(this.orderInfo.totalPrice)
+    }
+  },
   created() {
     this.orderInfo = initOrderInfo()
   },
@@ -442,7 +468,7 @@ export default {
           const { data } = await this.$store.dispatch('getOrderInfo', {
             orderId,
             uid,
-            idToken,
+            idToken
           })
           orderDetail = data
         } catch (error) {
@@ -452,8 +478,8 @@ export default {
       }
       orderDetail.isEdit = false
       this.orderInfo = orderDetail
-    },
-  },
+    }
+  }
 }
 </script>
 

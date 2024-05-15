@@ -27,8 +27,8 @@ export default {
       handler(val) {
         const pathname = val.path
         this.showSocialGroup(pathname)
-      },
-    },
+      }
+    }
   },
   mounted() {
     const pathname = location.pathname
@@ -42,8 +42,8 @@ export default {
       } else {
         sideSocialGroup.style.display = 'none'
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

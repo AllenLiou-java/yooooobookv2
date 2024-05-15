@@ -3,38 +3,48 @@ const statusDocument = {
     {
       code: 400,
       error: 'EMAIL_NOT_FOUND',
-      errorCH: 'Email 不存在',
+      errorCH: 'Email 不存在'
     },
     {
       code: 400,
       error: 'EMAIL_EXISTS',
-      errorCH: 'Email 已存在',
+      errorCH: 'Email 已存在'
     },
     {
       code: 400,
       error: 'INVALID_EMAIL',
-      errorCH: 'Email 格式錯誤',
+      errorCH: 'Email 格式錯誤'
     },
     {
       code: 400,
       error: 'INVALID_PASSWORD',
-      errorCH: '密碼錯誤',
+      errorCH: '密碼錯誤'
     },
     {
       code: 400,
       error: 'WEAK_PASSWORD : Password should be at least 6 characters',
-      errorCH: '設定的密碼至少要6位數',
+      errorCH: '設定的密碼至少要6位數'
     },
     {
       code: 400,
       error: 'TOO_MANY_ATTEMPTS_TRY_LATER',
-      errorCH: '已發送太多次請求，請稍後再提出請求',
+      errorCH: '已發送太多次請求，請稍後再提出請求'
+    },
+    {
+      code: 400,
+      error: 'INVALID_LOGIN_CREDENTIALS',
+      errorCH: '無效的登入憑證'
     },
     {
       code: 401,
       error: 'Permission denied',
-      errorCH: '權限不足',
+      errorCH: '權限不足'
     },
+    {
+      code: 404,
+      error: 'This page could not be found',
+      errorCH: '此頁面不存在，請回到首頁'
+    }
   ],
   matchErrorMsg(statusCode, statusError) {
     const statusMatched = statusDocument.statusList.filter((status) => {
@@ -46,7 +56,7 @@ const statusDocument = {
     } else {
       return statusError.message
     }
-  },
+  }
 }
 
 export default statusDocument

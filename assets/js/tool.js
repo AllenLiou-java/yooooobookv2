@@ -62,7 +62,11 @@ export const NumberComma = (data) => {
   // const comma = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g
   // eslint-disable-next-line prefer-regex-literals
   const comma = new RegExp('\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))', 'g')
-  return data.toString().replace(comma, ',')
+  let tempData = data
+  if (!tempData) {
+    tempData = 0
+  }
+  return tempData.toString().replace(comma, ',')
 }
 
 // 檔案下載
@@ -76,7 +80,7 @@ export const downloadFile = (storage, refPath, filename) => {
       $axios({
         url,
         method: 'GET',
-        responseType: 'blob',
+        responseType: 'blob'
       })
         .then((response) => {
           const url = window.URL.createObjectURL(new Blob([response.data]))

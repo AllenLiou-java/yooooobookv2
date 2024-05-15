@@ -17,9 +17,10 @@ export const state = () => ({
   order: {},
   userOrderList: [],
   allOrderList: [],
+  orderListCart: [],
   isAdministrator: false,
-  productList: [],
-  productInfo: {},
+  productList: []
+  // productInfo: {}
 })
 
 export const mutations = {
@@ -47,6 +48,7 @@ export const mutations = {
     state.isUserLoggedIn = false
     state.userName = ''
     state.userPicture = ''
+    state.isAdministrator = false
 
     if (process.client) {
       // 移除Cookie資訊
@@ -85,15 +87,18 @@ export const mutations = {
   setAllOrderList(state, payload) {
     state.allOrderList = payload
   },
+  setOrderListCart(state, payload) {
+    state.orderListCart = payload
+  },
   setIsAdministrator(state, payload) {
     state.isAdministrator = payload
   },
   setProductList(state, payload) {
     state.productList = payload
-  },
-  setProductInfo(state, payload) {
-    state.productInfo = payload
-  },
+  }
+  // setProductInfo(state, payload) {
+  //   state.productInfo = payload
+  // }
 }
 
 export const getters = {}
@@ -112,7 +117,7 @@ export const actions = {
         userPicture: id_token_Decode.picture,
         email: id_token_Decode.email,
         id_token: idToken,
-        refresh_token: context.query.refresh_token,
+        refresh_token: context.query.refresh_token
       })
 
       dispatch('saveMemberInfo', {
@@ -120,7 +125,7 @@ export const actions = {
         userUid: id_token_Decode.user_id,
         picture: id_token_Decode.picture,
         email: id_token_Decode.email,
-        idToken,
+        idToken
       })
 
       // 判斷是否擁有後臺權限
@@ -156,12 +161,19 @@ export const actions = {
       commit('setUserLoggedIn', {
         userPicture: picture,
         userName: name,
-        userUid: uid,
+        userUid: uid
       })
 
       // 判斷是否擁有後臺權限，並更新
       const isAdministrator = context.app.$cookies.get('isAdministrator')
       commit('setIsAdministrator', isAdministrator)
+
+      // 取得cookie裡的orderList
+      const orderListInCart = context.app.$cookies.get('orderListInCart')
+      if (orderListInCart) {
+        const orderList = orderListInCart
+        commit('setOrderListCart', orderList)
+      }
     }
   },
   saveMemberInfo({ state, commit }, payload) {
@@ -169,7 +181,7 @@ export const actions = {
     const { idToken, ..._payload } = payload
     const _data = _payload || {
       name: state.userName,
-      picture: state.userPicture,
+      picture: state.userPicture
     }
     const data = { ..._data }
 
@@ -196,6 +208,21 @@ export const actions = {
       console.log(e)
     }
   },
+  // getOrderListFromCookie({ commit }) {
+  //   return new Promise((resolve, reject) => {
+  //     const orderListInCart = Cookie.get('orderListInCart')
+  //     let orderList = []
+  //     if (orderListInCart) {
+  //       orderList = JSON.parse(orderListInCart)
+  //     }
+  //     commit('setOrderListCart', orderList)
+  //     resolve(orderList)
+  //   })
+  // },
+  updateOrderList({ commit }, payload) {
+    Cookie.set('orderListInCart', JSON.stringify(payload))
+    commit('setOrderListCart', payload)
+  },
   getOrderInfo(context, payload) {
     const orderId = payload.orderId
     const uid = payload.uid
@@ -207,7 +234,7 @@ export const actions = {
 
     const data = {
       grant_type: 'refresh_token',
-      refresh_token: refreshToken,
+      refresh_token: refreshToken
     }
 
     return await this.$axios({
@@ -215,9 +242,9 @@ export const actions = {
       url: API.member.exchangeToken.url,
       baseURL: API.member.exchangeToken.baseUrl,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      data: qs.stringify(data),
+      data: qs.stringify(data)
     })
       .then((res) => {
         if (process.client) {
@@ -232,4 +259,20 @@ export const actions = {
         console.log(e)
       })
   },
+  getProductList({ commit }) {
+    return new Promise((resolve, reject) => {
+      this.$api.products
+        .getProducts()
+        .then((res) => {
+          const data = res.data
+          const productList = Object.values(data)
+
+          commit('setProductList', productList)
+          resolve(productList)
+        })
+        .catch((e) => {
+          console.log('取得產品列表失敗', e)
+        })
+    })
+  }
 }

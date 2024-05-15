@@ -5,7 +5,7 @@ export default (axios) => ({
   getAllOrders(idToken) {
     return axios({
       method: API.order.getAllOrders.method,
-      url: API.order.getAllOrders.url + '?auth=' + idToken,
+      url: API.order.getAllOrders.url + '?auth=' + idToken
     })
   },
   getOrderList(uid, idToken) {
@@ -14,7 +14,7 @@ export default (axios) => ({
       url:
         API.order.getOrderList.url.replace(':user_id.json', uid + '.json') +
         '?auth=' +
-        idToken,
+        idToken
     })
   },
   getOrderInfo(uid, orderId, idToken) {
@@ -26,7 +26,7 @@ export default (axios) => ({
           uid + '/' + orderId + '.json'
         ) +
         '?auth=' +
-        idToken,
+        idToken
     })
   },
   patchOrderInfo(uid, orderId, idToken, data) {
@@ -39,7 +39,7 @@ export default (axios) => ({
         ) +
         '?auth=' +
         idToken,
-      data,
+      data
     })
-  },
+  }
 })

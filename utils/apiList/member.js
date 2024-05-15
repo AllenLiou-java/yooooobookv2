@@ -7,7 +7,7 @@ export default (axios) => ({
       url:
         API.getMemberInfo.url.replace(':user_id.json', data.localId + '.json') +
         '?auth=' +
-        data.idToken,
+        data.idToken
     })
   },
   patchMemberInfo(localId, idToken, data) {
@@ -17,13 +17,13 @@ export default (axios) => ({
         API.patchMemberInfo.url.replace(':user_id.json', localId + '.json') +
         '?auth=' +
         idToken,
-      data,
+      data
     })
   },
   getAuthList(idToken) {
     return axios({
       method: API.auth.getAuthList.method,
-      url: API.auth.getAuthList.url + '?auth=' + idToken,
+      url: API.auth.getAuthList.url + '?auth=' + idToken
     })
-  },
+  }
 })

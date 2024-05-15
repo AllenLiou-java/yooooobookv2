@@ -2,7 +2,7 @@ import indexApi from '@/utils/index'
 
 // 轉換indexApi
 
-export default function ({ $axios, store }, inject) {
+export default function ({ $axios, store, redirect }, inject) {
   function axiosConfig($axios) {
     let requestConfig = {}
 
@@ -17,11 +17,11 @@ export default function ({ $axios, store }, inject) {
         method: config.method,
         data: config.data,
         headers: config.headers,
-        params: config.params,
+        params: config.params
       }
 
       config.params = {
-        key: process.env.FIREBASE_API_KEY,
+        key: process.env.FIREBASE_API_KEY
       }
 
       config.startTime = new Date().getTime()
@@ -52,7 +52,7 @@ export default function ({ $axios, store }, inject) {
           headers: responseConfig.headers,
           data: responseConfig.data,
           params: responseConfig.params,
-          responseData: response.data,
+          responseData: response.data
         })
       }
     })
@@ -69,8 +69,13 @@ export default function ({ $axios, store }, inject) {
         data: responseConfig.data,
         params: responseConfig.params,
         responseData: response.data,
-        ...requestConfig,
+        ...requestConfig
       })
+
+      if (response.status === 401 && response.statusText === 'Unauthorized') {
+        store.commit('setUserLogout')
+        store.commit('setOpenLoginModal', true)
+      }
     })
 
     return $axios

@@ -54,7 +54,7 @@
 export default {
   props: {
     isOpen: {
-      type: Boolean,
+      type: Boolean
     },
     pagesContent: {
       type: Object,
@@ -63,21 +63,21 @@ export default {
           name: '',
           activePage: 1,
           coverImg: '',
-          pages: [],
+          pages: []
         }
-      },
+      }
     },
     bookOffsetTop: {
       type: Number,
       default() {
         return 0
-      },
-    },
+      }
+    }
   },
   data() {
     return {
       hasMouse: true,
-      pageNum: this.pagesContent.activePage,
+      pageNum: this.pagesContent.activePage
     }
   },
   watch: {
@@ -88,7 +88,7 @@ export default {
       } else {
         window.location.hash = ''
       }
-    },
+    }
   },
   mounted() {
     window.addEventListener('keydown', (ev) => {
@@ -117,8 +117,8 @@ export default {
     closeViewer() {
       window.location.hash = ''
       this.$emit('closeViewer', !this.isOpen)
-    },
-  },
+    }
+  }
 }
 </script>
 

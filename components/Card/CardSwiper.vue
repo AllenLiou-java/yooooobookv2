@@ -32,7 +32,7 @@ import Card from '@/components/Card/Card.vue'
 export default {
   name: 'CardSwiper',
   components: {
-    Card,
+    Card
   },
   props: {
     features: {
@@ -41,12 +41,12 @@ export default {
         const data = [
           {
             title: '',
-            description: '',
-          },
+            description: ''
+          }
         ]
         return data
-      },
-    },
+      }
+    }
   },
   mounted() {
     // eslint-disable-next-line no-unused-vars
@@ -58,7 +58,7 @@ export default {
       autoplay: {
         delay: 2000,
         stopOnLastSlide: false,
-        disableOnInteraction: true,
+        disableOnInteraction: true
       },
       // effect: "coverflow",
       // centeredSlides: true,
@@ -68,14 +68,14 @@ export default {
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',
-        bulletElement: 'li',
-      },
+        bulletElement: 'li'
+      }
       // navigation: {
       //   nextEl: '.swiper-button-next',
       //   prevEl: '.swiper-button-prev',
       // },
     })
-  },
+  }
 }
 </script>
 

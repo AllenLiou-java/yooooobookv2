@@ -8,18 +8,18 @@
 import {
   switchOrderStatus,
   switchDeliveryCompany,
-  NumberComma,
+  NumberComma
 } from '@/assets/js/tool'
 export default {
   props: {
     dataType: {
       type: String,
-      required: true,
+      required: true
     },
     originData: {
       type: [String, Number],
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     formatData() {
@@ -38,8 +38,8 @@ export default {
         formatData = NumberComma(data)
       }
       return formatData
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -22,28 +22,28 @@
 import { BImg } from 'bootstrap-vue'
 export default {
   components: {
-    BImg,
+    BImg
   },
   props: {
     title: {
       type: String,
-      default: 'Notice!',
+      default: 'Notice!'
     },
     content: {
       type: String,
-      default: 'This is the content of the toast.',
+      default: 'This is the content of the toast.'
     },
     variant: {
       type: String,
-      default: 'danger',
+      default: 'danger'
     },
     toaster: {
       type: String,
-      default: 'b-toaster-bottom-right',
-    },
+      default: 'b-toaster-bottom-right'
+    }
   },
   data() {
     return {}
-  },
+  }
 }
 </script>

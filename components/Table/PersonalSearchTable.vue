@@ -108,17 +108,17 @@ import Formatter from '@/components/Formatter.vue'
 
 export default {
   components: {
-    Formatter,
+    Formatter
   },
   props: {
     fields: {
       type: Array,
-      required: true,
+      required: true
     },
     items: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -131,20 +131,20 @@ export default {
       infoModal: {
         id: 'info-modal',
         title: '',
-        content: '',
-      },
+        content: ''
+      }
     }
   },
   computed: {
     totalRows() {
       return this.items.length
-    },
+    }
   },
   watch: {
     items(newVal) {
       const page = this.$route.query.page
       this.turnPage(page)
-    },
+    }
   },
   mounted() {
     const currentPage = this.$route.query.page
@@ -158,10 +158,10 @@ export default {
         this.currentPage = page
         this.$router.push({
           name: 'search',
-          query: { page },
+          query: { page }
         })
       })
-    },
-  },
+    }
+  }
 }
 </script>

@@ -12,7 +12,7 @@ const {
   PROJECT_ID,
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
-  APP_ID,
+  APP_ID
 } = process.env
 
 export default {
@@ -20,7 +20,7 @@ export default {
   head: {
     title: '有良冊股份有限公司',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
@@ -28,98 +28,98 @@ export default {
       {
         name: 'keywords',
         content:
-          '有良冊,公司登記,公司申請,公司登記實務及案例解析,有限公司,股份有限公司,應備文件詳析,company registration',
+          '有良冊,公司登記,公司申請,公司登記實務及案例解析,有限公司,股份有限公司,應備文件詳析,company registration'
       },
       {
         property: 'og:site_name',
-        content: '有良冊股份有限公司',
+        content: '有良冊股份有限公司'
       },
       {
         property: 'og:type',
-        content: 'website',
+        content: 'website'
       },
       { property: 'og:locale', content: 'zh_TW' },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-TileImage', content: '/ms-icon-144x144.png' },
-      { name: 'theme-color', content: '#ffffff' },
+      { name: 'theme-color', content: '#ffffff' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'apple-touch-icon',
         sizes: '57x57',
-        href: '/apple-icon-57x57.png',
+        href: '/apple-icon-57x57.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '60x60',
-        href: '/apple-icon-60x60.png',
+        href: '/apple-icon-60x60.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '72x72',
-        href: '/apple-icon-72x72.png',
+        href: '/apple-icon-72x72.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '76x76',
-        href: '/apple-icon-76x76.png',
+        href: '/apple-icon-76x76.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '114x114',
-        href: '/apple-icon-114x114.png',
+        href: '/apple-icon-114x114.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '120x120',
-        href: '/apple-icon-120x120.png',
+        href: '/apple-icon-120x120.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '144x144',
-        href: '/apple-icon-144x144.png',
+        href: '/apple-icon-144x144.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '152x152',
-        href: '/apple-icon-152x152.png',
+        href: '/apple-icon-152x152.png'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: '/apple-icon-180x180.png',
+        href: '/apple-icon-180x180.png'
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '192x192',
-        href: '/android-icon-192x192.png',
+        href: '/android-icon-192x192.png'
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '32x32',
-        href: '/favicon-32x32.png',
+        href: '/favicon-32x32.png'
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '96x96',
-        href: '/favicon-96x96.png',
+        href: '/favicon-96x96.png'
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '16x16',
-        href: '/favicon-16x16.png',
+        href: '/favicon-16x16.png'
       },
       {
         rel: 'manifest',
-        href: '/manifest.json',
-      },
+        href: '/manifest.json'
+      }
     ],
-    script: [],
+    script: []
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -130,7 +130,7 @@ export default {
     { src: '~/plugins/axios.js' },
     { src: '~/plugins/aos.js', mode: 'client' },
     { src: '~/plugins/flipbook.js', mode: 'client' },
-    { src: '~/plugins/icon.js', mode: 'client' },
+    { src: '~/plugins/icon.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -140,11 +140,11 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/style-resources',
+    '@nuxtjs/style-resources'
   ],
 
   styleResources: {
-    scss: ['@/assets/scss/abstracts/__abstracts-dir.scss'],
+    scss: ['@/assets/scss/abstracts/__abstracts-dir.scss']
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -154,31 +154,21 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    'cookie-universal-nuxt',
+    'cookie-universal-nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: '/'
   },
+
+  loading: '~/components/TheLoading.vue',
 
   bootstrapVue: {
     bootstrapCSS: false, // Or `css: false`
     bootstrapVueCSS: false, // Or `bvCSS: false`
-    componentPlugins: [
-      'LayoutPlugin',
-      'FormPlugin',
-      'FormCheckboxPlugin',
-      'FormInputPlugin',
-      'FormRadioPlugin',
-      'ToastPlugin',
-      'ModalPlugin',
-      'BreadcrumbPlugin',
-      'CollapsePlugin',
-      'CardPlugin',
-    ],
-    directivePlugins: ['VBPopoverPlugin', 'VBScrollspyPlugin'],
+    componentPlugins: ['ToastPlugin', 'ModalPlugin'],
     components: [
       'BContainer',
       'BRow',
@@ -186,28 +176,34 @@ export default {
       'BFormInput',
       'BFormTextarea',
       'BButton',
+      'BBreadcrumb',
       'BTable',
-      'BModal',
+      'BForm',
       'BFormGroup',
+      'BFormInvalidFeedback',
       'BFormSelect',
       'BInputGroup',
       'BInputGroupAppend',
       'BPagination',
       'BCard',
+      'BCardText',
+      'BCardBody',
       'BFormFile',
       'BBadge',
       'BProgress',
       'BProgressBar',
+      'BSidebar',
+      'BCollapse'
     ],
-    directives: ['VBModal', 'VBPopover', 'VBScrollspy'],
-    icons: false,
+    directives: ['VBToggle'],
+    icons: false
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extractCSS: true,
     babel: {
-      compact: false,
+      compact: false
     },
     optimization: {
       runtimeChunk: 'single',
@@ -235,15 +231,15 @@ export default {
               // npm package names are URL-safe, but some servers don't like @ symbols
 
               return `npm.${packageName.replace('@', '')}`
-            },
-          },
-        },
-      },
-    },
+            }
+          }
+        }
+      }
+    }
   },
   serverMiddleware: [
     { path: '/auth', handler: '~/server/auth.js' },
-    { path: '/mail', handler: '~/server/mail.js' },
+    { path: '/mail', handler: '~/server/mail.js' }
   ],
   env: {
     FIREBASE_API_KEY,
@@ -258,6 +254,6 @@ export default {
     PROJECT_ID,
     STORAGE_BUCKET,
     MESSAGING_SENDER_ID,
-    APP_ID,
-  },
+    APP_ID
+  }
 }

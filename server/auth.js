@@ -53,8 +53,8 @@ app.get('/google', async (req, res) => {
   const api_url = 'https://oauth2.googleapis.com/token'
   const config = {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   }
   const token_option = {
     code: req.query.code,
@@ -62,7 +62,7 @@ app.get('/google', async (req, res) => {
     client_secret: google_secret_id,
     grant_type: 'authorization_code',
     // 要跟Google Console裡填的一樣
-    redirect_uri: process_url + '/auth/google',
+    redirect_uri: process_url + '/auth/google'
   }
   const result = await axios.post(api_url, qs.stringify(token_option), config)
   // const id_token = result.data.id_token // jwt token
@@ -82,7 +82,7 @@ app.get('/google', async (req, res) => {
     requestUri: process_url,
     postBody: 'access_token=' + access_token + '&providerId=google.com',
     returnSecureToken: true,
-    returnIdpCredential: true,
+    returnIdpCredential: true
   })
 
   // 要傳給前端的資訊

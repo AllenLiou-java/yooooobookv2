@@ -56,12 +56,12 @@ export default {
     LogoutModal,
     NotifyModal,
     MyFooter,
-    SideSocialGroup,
+    SideSocialGroup
   },
   data() {
     return {
       errorMsg: '',
-      email: '',
+      email: ''
     }
   },
   computed: {
@@ -71,7 +71,7 @@ export default {
       },
       set(val) {
         this.$store.commit('setOpenLoginModal', val)
-      },
+      }
     },
     isOpenLogoutModal: {
       get() {
@@ -79,7 +79,7 @@ export default {
       },
       set(val) {
         this.$store.commit('setOpenLogoutModal', val)
-      },
+      }
     },
     modalType: {
       get() {
@@ -87,14 +87,14 @@ export default {
       },
       set(val) {
         this.$store.commit('setModalType', val)
-      },
+      }
     },
     emailVarifyNote() {
       return '請前往' + this.email + '進行Email驗證'
     },
     passwordChangeNote() {
       return '請前往' + this.email + '進行密碼變更'
-    },
+    }
   },
   mounted() {
     const idToken = Cookie.get('id_token')
@@ -126,13 +126,13 @@ export default {
           url: API.member.login.url,
           baseURL: process.env.GOOGLE_API_URL,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           data: {
             email,
             password,
-            returnSecureToken: true,
-          },
+            returnSecureToken: true
+          }
         })
           .then((loginRes) => {
             this.updateEmailVerifiedStatus(loginRes.data.idToken)
@@ -161,13 +161,13 @@ export default {
           url: API.member.registered.url,
           baseURL: process.env.GOOGLE_API_URL,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           data: {
             email,
             password,
-            returnSecureToken: true,
-          },
+            returnSecureToken: true
+          }
         })
           .then((res) => {
             // 將memberInfo 存到firebase
@@ -176,7 +176,7 @@ export default {
               name,
               userUid: res.data.localId,
               emailVerified: false,
-              idToken: res.data.idToken,
+              idToken: res.data.idToken
             }
             const idToken = res.data.idToken
             this.$store.dispatch('saveMemberInfo', _data)
@@ -195,7 +195,7 @@ export default {
           baseURL: process.env.GOOGLE_API_URL,
           method: API.member.emailVerify.method,
           url: API.member.emailVerify.url,
-          data: { requestType: 'PASSWORD_RESET', email },
+          data: { requestType: 'PASSWORD_RESET', email }
         })
           .then((res) => {
             this.email = res.data.email
@@ -218,7 +218,7 @@ export default {
             userUid: loginResData.localId,
             id_token: loginResData.idToken,
             refresh_token: loginResData.refreshToken,
-            email: loginResData.email,
+            email: loginResData.email
           }
           this.$store.commit('setUserLoggedIn', _data)
           this.$store.commit('setOpenLoginModal', false)
@@ -240,7 +240,7 @@ export default {
           const emailVerified = res.data.users[0].emailVerified
           const localId = res.data.users[0].localId
           const postData = {
-            emailVerified,
+            emailVerified
           }
           this.$api.member
             .patchMemberInfo(localId, idToken, postData)
@@ -278,7 +278,7 @@ export default {
         baseURL: process.env.GOOGLE_API_URL,
         method: API.member.emailVerify.method,
         url: API.member.emailVerify.url,
-        data: { requestType: 'VERIFY_EMAIL', idToken },
+        data: { requestType: 'VERIFY_EMAIL', idToken }
       })
     },
     getAccountInfo(idToken) {
@@ -287,11 +287,11 @@ export default {
         url: API.member.getAccountInfo.url,
         baseURL: process.env.GOOGLE_API_URL,
         data: {
-          idToken,
-        },
+          idToken
+        }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

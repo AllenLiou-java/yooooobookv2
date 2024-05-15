@@ -255,11 +255,11 @@ export default {
   props: {
     inputSetup: {
       type: Object,
-      required: true,
+      required: true
     },
     btnSetup: {
       type: Array,
-      required: true,
+      required: true
     },
     formData: {
       type: Object,
@@ -276,22 +276,22 @@ export default {
           otherDeliveryList: [],
           invoiceList: [],
           mainOrderQty: null,
-          totalOrderQty: null,
+          totalOrderQty: null
         }
-      },
+      }
     },
     orderMode: {
       type: String,
       default() {
         return 'single'
-      },
+      }
     },
     orderList: {
       type: Array,
       default() {
         return []
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -303,7 +303,7 @@ export default {
           placeholder: '請輸入姓名',
           attrName: 'recipient',
           required: true,
-          invalidFeedback: '請輸入收件人姓名',
+          invalidFeedback: '請輸入收件人姓名'
         },
         {
           title: '收件人地址',
@@ -311,7 +311,7 @@ export default {
           placeholder: '請輸入地址',
           attrName: 'address',
           required: true,
-          invalidFeedback: '請輸入地址',
+          invalidFeedback: '請輸入地址'
         },
         {
           title: '聯絡電話',
@@ -319,7 +319,7 @@ export default {
           placeholder: '請輸入電話號碼',
           attrName: 'phone',
           required: true,
-          invalidFeedback: '請輸入電話號碼',
+          invalidFeedback: '請輸入電話號碼'
         },
         {
           title: '發票抬頭',
@@ -327,7 +327,7 @@ export default {
           placeholder: '請輸入發票抬頭',
           attrName: 'buyer',
           required: true,
-          invalidFeedback: '請輸入發票抬頭',
+          invalidFeedback: '請輸入發票抬頭'
         },
         {
           title: '統一編號',
@@ -335,8 +335,8 @@ export default {
           placeholder: '請輸入統一編號(選填)',
           attrName: 'taxId',
           required: false,
-          invalidFeedback: '請輸入8碼統一編號',
-        },
+          invalidFeedback: '請輸入8碼統一編號'
+        }
       ],
       deliveryInputSetupGroup: [],
       // invoiceInputSetup: [
@@ -357,7 +357,7 @@ export default {
       //     invalidFeedback: '請輸入8碼統一編號',
       //   },
       // ],
-      invoiceInputSetupGroup: [],
+      invoiceInputSetupGroup: []
     }
   },
   computed: {
@@ -432,7 +432,7 @@ export default {
       } else {
         return this.inputSetup.multiAddressMode
       }
-    },
+    }
   },
   methods: {
     onSubmit() {
@@ -478,7 +478,7 @@ export default {
         address: '',
         phone: '',
         taxId: '',
-        orderQty: 1,
+        orderQty: 1
       }
       this.inputValue.otherDeliveryList.push(deliveryItem)
     },
@@ -486,7 +486,7 @@ export default {
       const invoiceItem = {
         buyer: '',
         taxId: '',
-        productList: [],
+        productList: []
       }
 
       const invoiceInputSetup = [
@@ -496,7 +496,7 @@ export default {
           placeholder: '請輸入發票抬頭',
           attrName: 'buyer',
           required: true,
-          invalidFeedback: '請輸入發票抬頭',
+          invalidFeedback: '請輸入發票抬頭'
         },
         {
           title: '統一編號',
@@ -504,8 +504,8 @@ export default {
           placeholder: '請輸入統一編號(選填)',
           attrName: 'taxId',
           required: false,
-          invalidFeedback: '請輸入8碼統一編號',
-        },
+          invalidFeedback: '請輸入8碼統一編號'
+        }
       ]
 
       // const _this = this
@@ -515,7 +515,7 @@ export default {
           name: orderItem.name,
           productId: orderItem.productId,
           orderQty: 0,
-          price: orderItem.price.discount,
+          price: orderItem.price.discount
         })
 
         invoiceInputSetup.push({
@@ -525,7 +525,7 @@ export default {
           attrName: 'invoiceItem',
           id: orderItem.productId,
           required: true,
-          invalidFeedback: '請輸入此產品寄送套數',
+          invalidFeedback: '請輸入此產品寄送套數'
         })
       })
 
@@ -592,7 +592,7 @@ export default {
       }
 
       return true
-    },
-  },
+    }
+  }
 }
 </script>

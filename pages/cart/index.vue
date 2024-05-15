@@ -3,8 +3,9 @@
     <div class="container">
       <section class="order">
         <h2>訂單內容</h2>
-        <template v-if="orderList.length > 0">
-          <ul class="orderList">
+
+        <div class="orderList">
+          <ul>
             <li
               v-for="(item, idx) in orderList"
               :key="idx + 1"
@@ -44,22 +45,12 @@
               </div>
             </li>
           </ul>
-        </template>
-        <template v-else>
-          <ul class="orderList">
-            <li class="emptyMsg">購物車內無任何商品，請返回訂購頁</li>
-          </ul>
-        </template>
+          <p v-show="orderList.length === 0" class="emptyMsg">
+            購物車內無任何商品，請返回訂購頁
+          </p>
+        </div>
+
         <div class="d-flex flex-column align-items-end">
-          <Formatter
-            data-type="NumberComma"
-            :origin-data="shippingFee"
-            class="total"
-          >
-            <template #default="propsData">
-              行政處理費 <span> NT$ {{ propsData.formatData }}</span>
-            </template>
-          </Formatter>
           <Formatter
             data-type="NumberComma"
             :origin-data="totalPrice"
@@ -75,29 +66,15 @@
 
       <section class="buyerInfo">
         <h2>訂購人資訊</h2>
-        <div class="mb-4">
-          <b-button
-            :variant="orderMode === 'single' ? 'dark' : 'outline-dark'"
-            class="mr-2"
-            @click="setOrderMode('single')"
-            >單一地址寄送</b-button
-          >
-          <b-button
-            :variant="orderMode === 'multi' ? 'dark' : 'outline-dark'"
-            @click="setOrderMode('multi')"
-            >多個地址寄送</b-button
-          >
-        </div>
 
         <OrderForm
           ref="orderForm"
           :form-data="inputValue"
           :input-setup="inputSetup"
           :btn-setup="btnSetup"
-          :order-mode="orderMode"
-          :order-list="orderList"
           @submitEvent="sendOrder"
           @resetEvent="$router.back()"
+          @toastEvent="formValidateError"
           @orderQtyError="orderQtyError"
         />
       </section>
@@ -117,7 +94,7 @@ export default {
   components: {
     OrderForm,
     Formatter,
-    Toaster,
+    Toaster
   },
   layout: 'cartPage',
   middleware: ['auth'],
@@ -125,181 +102,83 @@ export default {
     return {
       orderList: [],
       orderInfo: {},
-      // inputSetup: [
-      //   {
-      //     title: '收件人姓名',
-      //     type: 'text',
-      //     placeholder: '請輸入姓名',
-      //     attrName: 'recipient',
-      //     required: true,
-      //     invalidFeedback: '請輸入收件人姓名',
-      //   },
-      //   {
-      //     title: '收件人地址',
-      //     type: 'text',
-      //     placeholder: '請輸入地址',
-      //     attrName: 'address',
-      //     required: true,
-      //     invalidFeedback: '請輸入地址',
-      //   },
-      //   {
-      //     title: 'Email',
-      //     type: 'email',
-      //     placeholder: 'example@gmail.com',
-      //     attrName: 'email',
-      //     required: true,
-      //     invalidFeedback: '請確認email格式',
-      //   },
-      //   {
-      //     title: '聯絡電話',
-      //     type: 'tel',
-      //     placeholder: '請輸入電話號碼',
-      //     attrName: 'phone',
-      //     required: true,
-      //     invalidFeedback: '請輸入電話號碼',
-      //   },
-      //   {
-      //     title: '帳戶後5碼',
-      //     type: 'text',
-      //     placeholder: '請輸入金融帳戶後5碼',
-      //     attrName: 'account',
-      //     required: true,
-      //     invalidFeedback: '請確認輸入之數字',
-      //   },
-      //   {
-      //     title: '發票抬頭',
-      //     type: 'text',
-      //     placeholder: '請輸入發票抬頭',
-      //     attrName: 'buyer',
-      //     required: true,
-      //     invalidFeedback: '請輸入發票抬頭',
-      //   },
-      //   {
-      //     title: '統一編號',
-      //     type: 'text',
-      //     placeholder: '請輸入統一編號(選填)',
-      //     attrName: 'taxId',
-      //     required: false,
-      //     invalidFeedback: '請輸入8碼統一編號',
-      //   },
-      // ],
-      inputSetup: {
-        singleAddressMode: [
-          {
-            title: '收件人姓名',
-            type: 'text',
-            placeholder: '請輸入姓名',
-            attrName: 'recipient',
-            required: true,
-            invalidFeedback: '請輸入收件人姓名',
-            id: 'recipient',
-          },
-          {
-            title: '收件人地址',
-            type: 'text',
-            placeholder: '請輸入地址',
-            attrName: 'address',
-            required: true,
-            invalidFeedback: '請輸入地址',
-            id: 'address',
-          },
-          {
-            title: 'Email',
-            type: 'email',
-            placeholder: 'example@gmail.com',
-            attrName: 'email',
-            required: true,
-            invalidFeedback: '請確認email格式',
-            id: 'email',
-          },
-          {
-            title: '聯絡電話',
-            type: 'tel',
-            placeholder: '請輸入電話號碼',
-            attrName: 'phone',
-            required: true,
-            invalidFeedback: '請輸入電話號碼',
-            id: 'tel',
-          },
-          {
-            title: '帳戶後5碼',
-            type: 'text',
-            placeholder: '請輸入金融帳戶後5碼',
-            attrName: 'account',
-            required: true,
-            invalidFeedback: '請確認輸入之數字',
-            id: 'account',
-          },
-        ],
-        multiAddressMode: [
-          {
-            title: '收件人姓名',
-            type: 'text',
-            placeholder: '請輸入姓名',
-            attrName: 'recipient',
-            required: true,
-            invalidFeedback: '請輸入收件人姓名',
-            id: 'recipient',
-          },
-          {
-            title: '收件人地址',
-            type: 'text',
-            placeholder: '請輸入地址',
-            attrName: 'address',
-            required: true,
-            invalidFeedback: '請輸入地址',
-            id: 'address',
-          },
-          {
-            title: 'Email',
-            type: 'email',
-            placeholder: 'example@gmail.com',
-            attrName: 'email',
-            required: true,
-            invalidFeedback: '請確認email格式',
-            id: 'email',
-          },
-          {
-            title: '聯絡電話',
-            type: 'tel',
-            placeholder: '請輸入電話號碼',
-            attrName: 'phone',
-            required: true,
-            invalidFeedback: '請輸入電話號碼',
-            id: 'tel',
-          },
-          {
-            title: '帳戶後5碼',
-            type: 'text',
-            placeholder: '請輸入金融帳戶後5碼',
-            attrName: 'account',
-            required: true,
-            invalidFeedback: '請確認輸入之數字',
-            id: 'account',
-          },
-          {
-            title: '發票抬頭',
-            type: 'text',
-            placeholder: '請輸入發票抬頭',
-            attrName: 'buyer',
-            required: true,
-            invalidFeedback: '請輸入發票抬頭',
-            id: 'buyer',
-          },
-          {
-            title: '統一編號',
-            type: 'text',
-            placeholder: '請輸入統一編號(選填)',
-            attrName: 'taxId',
-            required: false,
-            invalidFeedback: '請輸入8碼統一編號',
-            id: 'taxId',
-          },
-        ],
-      },
+      inputSetup: [
+        {
+          title: '收件人姓名',
+          type: 'text',
+          placeholder: '請輸入姓名',
+          attrName: 'recipient',
+          required: true,
+          invalidFeedback: '請輸入收件人姓名',
+          id: 'main-recipient'
+        },
+        {
+          title: '收件人地址',
+          type: 'text',
+          placeholder: '請輸入地址',
+          attrName: 'address',
+          required: true,
+          invalidFeedback: '請輸入地址',
+          id: 'main-address'
+        },
+        {
+          title: 'Email',
+          type: 'email',
+          placeholder: 'example@gmail.com',
+          attrName: 'email',
+          required: true,
+          invalidFeedback: '請確認email格式',
+          id: 'main-email'
+        },
+        {
+          title: '聯絡電話',
+          type: 'tel',
+          placeholder: '請輸入電話號碼',
+          attrName: 'phone',
+          required: true,
+          invalidFeedback: '請輸入電話號碼',
+          id: 'main-phone'
+        },
+        {
+          title: '帳戶後5碼',
+          type: 'text',
+          placeholder: '請輸入金融帳戶後5碼',
+          attrName: 'account',
+          required: true,
+          invalidFeedback: '請確認輸入之數字',
+          id: 'main-account'
+        },
+        {
+          title: '發票買受人',
+          type: 'text',
+          placeholder: '請輸入發票買受人',
+          attrName: 'buyer',
+          required: true,
+          invalidFeedback: '請輸入發票買受人',
+          id: 'main-buyer'
+        },
+        {
+          title: '統一編號',
+          type: 'text',
+          placeholder: '請輸入統一編號(選填)',
+          attrName: 'taxId',
+          required: false,
+          invalidFeedback: '請輸入8碼統一編號',
+          id: 'main-taxId'
+        },
+        {
+          title: '訂單備註',
+          type: 'text',
+          placeholder: '請輸入備註內容',
+          attrName: 'buyerRemark',
+          required: false,
+          invalidFeedback: '請輸入備註內容',
+          id: 'main-buyerRemark'
+        }
+      ],
       btnSetup: [
         { type: 'reset', btnName: '返回', variant: 'primary' },
-        { type: 'submit', btnName: '訂單送出', variant: 'secondary' },
+        { type: 'submit', btnName: '訂單送出', variant: 'secondary' }
       ],
       inputValue: {
         recipient: '',
@@ -309,36 +188,13 @@ export default {
         account: '',
         buyer: '',
         taxId: '',
-        buyerRemark: '',
-        otherDeliveryList: [
-          {
-            recipient: '',
-            address: '',
-            phone: '',
-          },
-        ],
-        invoiceList: [
-          {
-            buyer: '',
-            taxId: '',
-            products: [
-              {
-                productId: '',
-                productName: '',
-                qty: 0,
-              },
-            ],
-          },
-        ],
-        mainOrderQty: null,
-        totalOrderQty: null,
+        buyerRemark: ''
       },
       toastSet: {
         title: '',
-        content: '',
+        content: ''
       },
-      stock: null,
-      orderMode: 'single',
+      stock: null
     }
   },
   head() {
@@ -348,29 +204,29 @@ export default {
         {
           // hid: 'description',
           name: 'description',
-          content: '購物車 - 有良冊股份有限公司',
+          content: '購物車 - 有良冊股份有限公司'
         },
         {
           // hid: 'og:description',
           property: 'og:description',
-          content: '購物車 - 有良冊股份有限公司',
+          content: '購物車 - 有良冊股份有限公司'
         },
         {
           // hid: 'og:title',
           property: 'og:title',
-          content: '購物車 - 有良冊股份有限公司',
+          content: '購物車 - 有良冊股份有限公司'
         },
         {
           // hid: 'og:image',
           property: 'og:image',
-          content: '/yooooobook.jpg',
+          content: '/yooooobook.jpg'
         },
         {
           // hid: 'og:url',
           property: 'og:url',
-          content: 'https://www.yooooobook.com/cart',
-        },
-      ],
+          content: 'https://www.yooooobook.com/cart'
+        }
+      ]
     }
   },
   computed: {
@@ -385,33 +241,19 @@ export default {
           }
         )
 
-        const total = allProductPrice + this.shippingFee
-
-        return total
+        return allProductPrice
       } else {
         return 0
       }
-    },
-    shippingFee() {
-      const fee = 300
-      const multiDeliveryQty = this.inputValue.otherDeliveryList.length
-      return multiDeliveryQty * fee
-    },
+    }
   },
   created() {
-    this.orderInfo = initOrderInfo()
-  },
-  mounted() {
-    if (Cookie.get('orderListInCart')) {
-      this.orderList = JSON.parse(Cookie.get('orderListInCart'))
-
-      // this.inputValue.mainOrderQty = this.orderList[0].qty
-      // this.inputValue.totalOrderQty = this.orderList[0].qty
+    const orderListInCart = Cookie.get('orderListInCart')
+    if (orderListInCart) {
+      this.orderList = JSON.parse(orderListInCart)
+    } else {
+      this.orderInfo = initOrderInfo()
     }
-
-    // this.orderIdCreater()
-    // this.addProductInputSetup()
-    // this.addInputValueOrderList()
   },
   methods: {
     async sendOrder(buyerInfo) {
@@ -424,37 +266,20 @@ export default {
       const orderId = orderInfo.orderId
       const uid = this.$store.state.userUid
       const idToken = Cookie.get('id_token')
-      const { productId, qty } = this.orderList[0]
-      let stock
 
-      try {
-        const { data } = await this.$api.stock.getStock(productId)
-        stock = data.qty
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
-      }
+      const isStockUpdated = await this.updateStock(idToken)
+      if (isStockUpdated) {
+        this.$nuxt.$loading.start()
+        await this.patchOrderInfoPromise(uid, orderId, idToken, orderInfo)
+        // 發送訂單確認信
+        await this.sendOrderConfirmMailPromise(orderInfo)
+        // 訂單資訊存入vuex
+        this.$store.commit('seUsertOrder', orderInfo)
 
-      if (stock >= qty) {
-        try {
-          await this.updateStock(productId, stock, qty, idToken)
-          await this.$api.order.patchOrderInfo(uid, orderId, idToken, orderInfo)
-          // 訂單資訊存入vuex
-          this.$store.commit('seUsertOrder', orderInfo)
-          // 發送訂單確認信
-          await this.sendOrderConfirmMail(orderInfo)
-          // 清除Cookie
-          Cookie.remove('orderListInCart')
-          this.$router.push('/cart/success/' + orderInfo.orderId)
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.log(e)
-        }
-      } else {
-        this.openToast('訂購失敗', '庫存不足，3秒後自動跳轉回訂購頁!')
-        setTimeout(() => {
-          this.$router.push({ name: 'order' })
-        }, 1000)
+        // 清除Cookie
+        Cookie.remove('orderListInCart')
+        this.$nuxt.$loading.finish()
+        this.$router.push('/cart/success/' + orderInfo.orderId)
       }
     },
     formatTimeDate(s) {
@@ -503,7 +328,7 @@ export default {
           unitPrice: item.price.discount,
           promote: item.price.promote,
           discountList: item.price.discountList,
-          totalPrice: this.totalPrice,
+          totalPrice: item.price.discount * item.qty
         }
       })
 
@@ -517,9 +342,7 @@ export default {
       orderInfo.phone = buyerInfo.phone
       orderInfo.taxId = buyerInfo.taxId
       orderInfo.bankAccountNo = buyerInfo.account
-      orderInfo.mainOrderQty = buyerInfo.mainOrderQty
       orderInfo.buyerRemark = buyerInfo.buyerRemark
-      orderInfo.otherDeliveryInfo = buyerInfo.otherDeliveryInfo
       orderInfo.orderId = orderId
       orderInfo.orderList = orderList
       orderInfo.totalPrice = this.totalPrice
@@ -529,24 +352,91 @@ export default {
 
       this.orderInfo = orderInfo
     },
-    sendOrderConfirmMail(orderInfo) {
+    sendOrderConfirmMailPromise(orderInfo) {
       try {
         return this.$axios({
           method: 'post',
           baseURL: process.env.WEB_URL,
           url: '/mail/orderConfirm',
-          data: orderInfo,
+          data: orderInfo
         })
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.log('發送訂單信件失敗', e)
       }
     },
-    updateStock(productId, stock, orderQty, idToken) {
-      const updatedStock = stock - orderQty
-      const data = { qty: updatedStock }
+    getStockPromise(productId) {
       try {
-        this.$api.stock.patchStock(productId, data, idToken)
+        return this.$api.stock.getStock(productId)
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(`取得${productId}庫存失敗`, e)
+      }
+    },
+    async updateStock(idToken) {
+      let isOrderListSotckAvaiable = false
+      let isOrderListSotckUpdated = false
+
+      // 初始化資料
+      const orders = this.orderList.map((order) => {
+        return {
+          productId: order.productId,
+          orderQty: order.qty,
+          stock: null,
+          isAvaiable: false,
+          isUpdated: false
+        }
+      })
+
+      // 取得各產品庫存 > 確認庫存 > 紀錄庫存
+      for (let i = 0; i < orders.length; i++) {
+        const { productId, orderQty } = orders[i]
+        const { data } = await this.getStockPromise(productId)
+        const stock = data.qty
+
+        if (stock >= orderQty) {
+          orders[i].stock = stock
+          orders[i].isAvaiable = true
+        } else {
+          orders[i].stock = stock
+          const productName = orders[i].name
+          this.openToast('庫存不足', `${productName} 庫存不足`)
+        }
+      }
+
+      isOrderListSotckAvaiable = !orders
+        .map((order) => order.isAvaiable)
+        .includes(false)
+
+      // 更新庫存
+      if (isOrderListSotckAvaiable) {
+        for (let i = 0; i < orders.length; i++) {
+          if (orders[i].isUpdated) return
+
+          const { productId, orderQty, stock } = orders[i]
+          const updatedStock = stock - orderQty
+          const data = { qty: updatedStock }
+          try {
+            await this.$api.stock.patchStock(productId, data, idToken)
+            orders[i].isUpdated = true
+          } catch (e) {
+            const productName = orders[i].name
+            // eslint-disable-next-line no-console
+            console.log(`${productName} 庫存更新失敗`, e)
+          }
+        }
+      }
+
+      return new Promise((resolve, reject) => {
+        isOrderListSotckUpdated = !orders
+          .map((order) => order.isUpdated)
+          .includes(false)
+        resolve(isOrderListSotckUpdated)
+      })
+    },
+    patchOrderInfoPromise(uid, orderId, idToken, orderInfo) {
+      try {
+        return this.$api.order.patchOrderInfo(uid, orderId, idToken, orderInfo)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e)
@@ -560,16 +450,10 @@ export default {
     orderQtyError(title, content) {
       this.openToast(title, content)
     },
-    setOrderMode(mode) {
-      this.orderMode = mode
-      if (mode === 'single') {
-        this.$refs.orderForm.clearDeliveryItem()
-        this.inputValue.mainOrderQty = this.orderList[0].qty
-      } else {
-        this.$refs.orderForm.addDeliveryItem()
-      }
-    },
-  },
+    formValidateError(title, content) {
+      this.openToast(title, content)
+    }
+  }
 }
 </script>
 
