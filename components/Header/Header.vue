@@ -42,7 +42,7 @@
 
         <div class="toggle" @click="toggleNavbar"></div>
 
-        <CartPanel />
+        <!-- <CartPanel /> -->
       </div>
     </div>
   </div>
@@ -50,14 +50,14 @@
 
 <script>
 import { lockScroll, unlockScroll } from '@/assets/js/tool'
-import CartPanel from '~/components/Sidebar/CartPanel.vue'
+// import CartPanel from '~/components/Sidebar/CartPanel.vue'
 
 export default {
   // eslint-disable-next-line vue/no-reserved-component-names
   name: 'Header',
-  components: {
-    CartPanel
-  },
+  // components: {
+  //   CartPanel
+  // },
   computed: {
     eventType() {
       const isUserLoggedIn = this.$store.state.isUserLoggedIn
