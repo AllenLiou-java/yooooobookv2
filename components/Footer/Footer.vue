@@ -36,6 +36,10 @@
               >yooooobook@gmail.com</a
             >
           </li>
+          <li>
+            <span>聯絡電話：</span>
+            <a href="tel:+886-978940828">0978-940-828</a>
+          </li>
         </ul>
       </div>
       <div class="right">

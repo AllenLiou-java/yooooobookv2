@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-b-toggle.sidebar-footer class="cart">
+  <div class="cart">
+    <div v-b-toggle.sidebar-footer>
       <client-only>
         <Cart class="cartIcon" />
       </client-only>
@@ -213,6 +213,7 @@ export default {
   position: relative;
   margin-left: 24px;
   transition: 0.5s;
+  padding: 6px;
   &:hover {
     cursor: pointer;
     color: #003756;

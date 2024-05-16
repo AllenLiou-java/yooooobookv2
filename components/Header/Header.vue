@@ -17,7 +17,7 @@
             <nuxt-link to="/search?page=1">訂單查詢</nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/file">檔案下載</nuxt-link>
+            <nuxt-link to="/file" exact>檔案下載</nuxt-link>
           </li>
 
           <li v-if="isAdministrator">

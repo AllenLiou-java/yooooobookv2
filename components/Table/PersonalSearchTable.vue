@@ -57,7 +57,13 @@
 
       <!-- 操作 -->
       <template #cell(actions)="row">
-        <nuxt-link class="btn btn-secondary" :to="'/search/' + row.item.orderId"
+        <!-- :to="'/search/' + row.item.orderId" -->
+        <nuxt-link
+          class="btn btn-secondary"
+          :to="{
+            name: 'search-orderId',
+            params: { orderId: row.item.orderId }
+          }"
           >查看詳情</nuxt-link
         >
       </template>

@@ -5,8 +5,11 @@
         class="col-12 d-flex justify-content-between align-items-center mb-3"
       >
         <h3 class="mb-0">訂單摘要</h3>
-        <nuxt-link class="text-decoration-underline" to="/search"
-          >回到訂單列表</nuxt-link
+        <span
+          class="text-decoration-underline"
+          style="cursor: pointer"
+          @click="$router.go(-1)"
+          >回到訂單列表</span
         >
       </div>
     </div>
