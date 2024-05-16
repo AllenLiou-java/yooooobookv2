@@ -211,7 +211,6 @@ export default {
 
 .cart {
   position: relative;
-  margin-left: 24px;
   transition: 0.5s;
   padding: 6px;
   &:hover {
