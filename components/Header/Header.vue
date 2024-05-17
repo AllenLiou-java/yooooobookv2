@@ -42,7 +42,7 @@
 
         <div class="toggle" @click="toggleNavbar"></div>
 
-        <!-- <CartPanel /> -->
+        <CartPanel />
       </div>
     </div>
   </div>
@@ -50,14 +50,14 @@
 
 <script>
 import { lockScroll, unlockScroll } from '@/assets/js/tool'
-// import CartPanel from '~/components/Sidebar/CartPanel.vue'
+import CartPanel from '~/components/Sidebar/CartPanel.vue'
 
 export default {
   // eslint-disable-next-line vue/no-reserved-component-names
   name: 'Header',
-  // components: {
-  //   CartPanel
-  // },
+  components: {
+    CartPanel
+  },
   computed: {
     eventType() {
       const isUserLoggedIn = this.$store.state.isUserLoggedIn
@@ -79,14 +79,12 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', () => {
-      this.toggleHeader()
+      // toggleHeader
+      const header = document.querySelector('.header')
+      header.classList.toggle('sticky', window.scrollY > 0)
     })
   },
   methods: {
-    toggleHeader() {
-      const header = document.querySelector('.header')
-      header.classList.toggle('sticky', window.scrollY > 0)
-    },
     moveToTop() {
       window.scrollTo({
         top: 0,
@@ -100,52 +98,12 @@ export default {
       toggle.classList.toggle('active')
       navigation.classList.toggle('active')
 
-      const isActived = this.hasClass(toggle, 'active')
-      if (isActived) {
+      const isToggleActive = toggle.classList.contains('active')
+      if (isToggleActive) {
         lockScroll()
-        this.addListenerToRemoveActive()
       } else {
         unlockScroll()
-        this.removeListener()
       }
-    },
-    addListenerToRemoveActive() {
-      const activeItem = document.querySelectorAll('.navigation li')
-      const toggle = document.querySelector('.toggle')
-      const navigation = document.querySelector('.navigation')
-
-      activeItem.forEach((item) => {
-        item.addEventListener(
-          'click',
-          () => {
-            toggle.classList.remove('active')
-            navigation.classList.remove('active')
-            unlockScroll()
-          },
-          true
-        )
-      })
-    },
-    removeListener() {
-      const activeItem = document.querySelectorAll('.navigation li')
-      const toggle = document.querySelector('.toggle')
-      const navigation = document.querySelector('.navigation')
-
-      activeItem.forEach((item) => {
-        item.removeEventListener(
-          'click',
-          () => {
-            toggle.classList.remove('active')
-            navigation.classList.remove('active')
-            unlockScroll()
-          },
-          true
-        )
-      })
-    },
-    hasClass(ele, className) {
-      const reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
-      return reg.test(ele.className)
     },
     openModal(event) {
       if (event === 'login') {
