@@ -1,6 +1,6 @@
 <template>
-  <div class="cart">
-    <div v-b-toggle.sidebar-footer>
+  <div>
+    <div v-b-toggle.sidebar-footer class="cart">
       <client-only>
         <Cart class="cartIcon" />
       </client-only>
@@ -211,6 +211,7 @@ export default {
 
 .cart {
   position: relative;
+  display: inline-block;
   transition: 0.5s;
   padding: 6px;
   &:hover {

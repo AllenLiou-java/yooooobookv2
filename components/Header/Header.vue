@@ -3,7 +3,9 @@
     <div class="container">
       <h1 class="logo m-0"><nuxt-link to="/">Yooooobook</nuxt-link></h1>
 
-      <div class="d-flex justify-content-center align-items-center">
+      <div class="d-flex align-items-center position-relative">
+        <div class="toggle" @click="toggleNavbar"></div>
+
         <ul class="navigation">
           <li @click="moveToTop()">
             <nuxt-link to="/" exact>首頁</nuxt-link>
@@ -39,8 +41,6 @@
             </button>
           </li>
         </ul>
-
-        <div class="toggle" @click="toggleNavbar"></div>
 
         <CartPanel />
       </div>
@@ -100,8 +100,29 @@ export default {
 
       const isToggleActive = toggle.classList.contains('active')
       if (isToggleActive) {
+        this.navigationItemListenerHandler('add')
         lockScroll()
       } else {
+        this.navigationItemListenerHandler('remove')
+        unlockScroll()
+      }
+    },
+    navigationItemListenerHandler(action) {
+      const activeItem = document.querySelectorAll('.navigation li')
+      const toggle = document.querySelector('.toggle')
+      const navigation = document.querySelector('.navigation')
+
+      activeItem.forEach((item) => {
+        if (action === 'add') {
+          item.addEventListener('click', removeActiveMode, true)
+        } else {
+          item.removeEventListener('click', removeActiveMode, true)
+        }
+      })
+
+      function removeActiveMode() {
+        toggle.classList.remove('active')
+        navigation.classList.remove('active')
         unlockScroll()
       }
     },
