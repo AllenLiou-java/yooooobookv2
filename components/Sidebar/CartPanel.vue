@@ -213,7 +213,7 @@ export default {
   position: relative;
   display: inline-block;
   transition: 0.5s;
-  padding: 6px;
+  padding: 6px 16px 6px 6px;
   &:hover {
     cursor: pointer;
     color: #003756;
@@ -225,7 +225,7 @@ export default {
   .cartCounter {
     position: absolute;
     top: 50%;
-    right: -10px;
+    right: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
