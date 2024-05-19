@@ -120,12 +120,13 @@
   }
 }
 
-.toggle {
-  display: none;
+.toggleBtn {
+  // display: none;
+  visibility: hidden;
 }
 
 @include media-w900 {
-  .toggle {
+  .toggleBtn {
     position: relative;
     width: 32px;
     height: 40px;
@@ -136,9 +137,10 @@
     z-index: 1000;
     margin-left: 16px;
     order: 1;
+    visibility: visible;
   }
 
-  .toggle::before {
+  .toggleBtn::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -149,7 +151,7 @@
     box-shadow: 0 10px 0 $tertiary;
   }
 
-  .toggle::after {
+  .toggleBtn::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -159,18 +161,18 @@
     transition: 0.25s;
   }
 
-  .toggle.active {
+  .toggleBtn.active {
     position: fixed;
     top: 30px;
     right: 40px;
   }
 
-  .toggle.active::before {
+  .toggleBtn.active::before {
     transform: translateY(0) rotate(45deg);
     box-shadow: 0 0 0 $tertiary;
   }
 
-  .toggle.active::after {
+  .toggleBtn.active::after {
     transform: translateY(0) rotate(-45deg);
   }
 

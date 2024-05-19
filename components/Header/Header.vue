@@ -4,7 +4,7 @@
       <h1 class="logo m-0"><nuxt-link to="/">Yooooobook</nuxt-link></h1>
 
       <div class="d-flex align-items-center position-relative">
-        <div class="toggle" @click="toggleNavbar"></div>
+        <div class="toggleBtn" @click="toggleNavbar"></div>
 
         <ul class="navigation">
           <li @click="moveToTop()">
@@ -92,14 +92,14 @@ export default {
       })
     },
     toggleNavbar() {
-      const toggle = document.querySelector('.toggle')
+      const toggleBtn = document.querySelector('.toggleBtn')
       const navigation = document.querySelector('.navigation')
 
-      toggle.classList.toggle('active')
+      toggleBtn.classList.toggle('active')
       navigation.classList.toggle('active')
 
-      const isToggleActive = toggle.classList.contains('active')
-      if (isToggleActive) {
+      const isToggleBtnActive = toggleBtn.classList.contains('active')
+      if (isToggleBtnActive) {
         this.navigationItemListenerHandler('add')
         lockScroll()
       } else {
@@ -109,7 +109,7 @@ export default {
     },
     navigationItemListenerHandler(action) {
       const activeItem = document.querySelectorAll('.navigation li')
-      const toggle = document.querySelector('.toggle')
+      const toggleBtn = document.querySelector('.toggleBtn')
       const navigation = document.querySelector('.navigation')
 
       activeItem.forEach((item) => {
@@ -121,7 +121,7 @@ export default {
       })
 
       function removeActiveMode() {
-        toggle.classList.remove('active')
+        toggleBtn.classList.remove('active')
         navigation.classList.remove('active')
         unlockScroll()
       }
