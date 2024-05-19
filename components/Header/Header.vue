@@ -4,8 +4,6 @@
       <h1 class="logo m-0"><nuxt-link to="/">Yooooobook</nuxt-link></h1>
 
       <div class="d-flex align-items-center position-relative">
-        <div class="toggleBtn" @click="toggleNavbar"></div>
-
         <ul class="navigation">
           <li @click="moveToTop()">
             <nuxt-link to="/" exact>首頁</nuxt-link>
@@ -44,6 +42,7 @@
 
         <CartPanel />
       </div>
+      <div class="toggleBtn" @click="toggleNavbar"></div>
     </div>
   </div>
 </template>
